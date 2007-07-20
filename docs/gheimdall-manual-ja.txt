@@ -1,0 +1,322 @@
+GHeimdall マニュアル 
+$Id$
+
+Copyright (C) 2007 SIOS Technology, Inc.
+
+Author: Takashi Matsuo <tmatsuo@sios.com>
+
+Table of contents
+1. 概要
+1.1. GHeimdall でできる事
+1.2. プラグインアーキテクチャ
+1.3. 対応システム
+2. インストール 
+2.1. 必要なパッケージ
+2.2. 本体インストール
+2.3. 準備
+2.3.1. SSOを有効にする
+2.3.2. 鍵ペアの作成
+2.4. 設定
+2.5. Apache の設定
+2.5.1. mod_proxy で動かす
+2.5.2. mod_python で動かす
+2.6. PAM の設定
+2.7. ログディレクトリの準備
+2.8. 起動
+2.9. 起動スクリプト
+3. GHeimdall の拡張
+3.1. 共通の決まり事
+3.2. 認証モジュールの作成
+3.3. パスワード変更モジュールの作成
+3.4. ユーザネームマッパモジュールの作成
+
+
+1. 概要 
+
+このプログラムは Google Apps の SSO サービス用 turbogears プロジェクト
+です。 このプログラムを使えば、自前の認証基板を使って、Google Apps へサ
+インインする事ができるようになります。オプションとして、パスワード変更
+機能も付いています。
+
+1.1. GHeimdall でできる事 
+
+ 1.1.1. できる事
+
+ Google Apps SSO認証・パスワード変更(バックエンドと Google Apps のパス
+ ワードを同時に変更も可能)
+
+ 1.1.2. できない事
+
+ アカウント作成・削除・既存データベースとの同期
+
+1.2. プラグインアーキテクチャ 
+
+GHeimdall は単純なプラグインアーキテクチャを採用しています。下記の機能
+においてプラグインを利用する事が可能になっています。同梱のプラグインで
+は要求が満たせない場合は、各種プラグインを開発する事で対応可能になりま
+す。
+
+ 1) 認証
+
+ 認証バックエンドに応じた認証プラグインを利用する事が出来ます。
+ GHeimdall にははじめからPAM を使った認証プラグインと ldap を使った認証
+ プラグインが同梱されています。また、プラグインとは異なりますが、特定の
+ HTTP ヘッダの値を使って、自動的に Google Apps へログインできる機能もあ
+ りますので、Apache の Basic 認証と組み合わせたり、クライアント証明書認
+ 証と組み合わせて利用する事が可能です。
+
+ 2) ユーザネームマッパ
+
+ 認証バックエンドが認証に利用するユーザ名と Google Apps 側のユーザ名が
+ 違う場合には、ユーザネームマッパ プラグインを利用して両者間のマッピン
+ グが行えます。
+
+ 3) パスワード変更機能
+
+ パスワード変更を行う部分をプラグインできます。GHeimdall にははじめから
+ PAM を使ったパスワード変更プラグインと ldap を使ったパスワード変更プラ
+ グインが同梱されています。
+
+1.3. 対応システム 
+
+現在のところ、Debian sid か CentOS5 で動作確認しています。
+
+2. インストール 
+
+2.1. 必要なパッケージ 
+
+GHeimdall の動作に必要なソフトウェアです。別途インストールしておいてく
+ださい。
+
+  1) Apache web server 
+  2) TurboGears 1.0.3 or higher
+     http://www.turbogears.org/ 
+  3) PyXMLSec
+     http://pyxmlsec.labs.libre-entreprise.org/ 
+  4) PyPAM (If you use PAM authentication)*1
+     http://www.pangalactic.org/PyPAM/
+  5) gdata-python-client 1.0.4 or higher
+     (If you want to change Google Apps password too)
+     http://code.google.com/p/gdata-python-client/
+  6) python-ldap
+     http://python-ldap.sourceforge.net/
+
+*1 PyPAM-0.5.0 は double free で落ちる事があります。現在修正版を弊社で
+   テスト中です。もし実験的なパッチを使いたいという場合は、
+   Takashi Matsuo <tmatsuo@sios.com> まで連絡ください。
+
+2.2. 本体インストール
+
+GHeimdall のインストールは簡単です。
+
+$ tg-admin i18n compile
+$ python setup.py build 
+$ sudo python setup.py install 
+
+2.3. 準備 
+
+ 2.3.1. SSOを有効にする 
+
+ Google Apps のウェブコンソールで、SSOサービスを有効にする必要がありま
+ す。また利用する機能に応じて、URL をセットしておく必要があります。デフォ
+ ルト設定での各機能の URL は下記の通りです。
+
+  1. ログイン
+     http://your.domain.example.com/gheimdall/login 
+  2. ログアウト
+     http://your.domain.example.com/gheimdall/logout 
+  3. パスワード変更
+     http://your.domain.example.com/gheimdall/passwd 
+
+ 2.3.2. 鍵ペアの作成 
+
+ Google Apps SSO サービスを利用するには rsa か dsa の鍵ペアが必要です。
+ 下記に openssl を使用して rsa の鍵ペアを作成する手順を示します。(例で
+ は何もしていませんが、秘密鍵ファイルのパーミッションには注意してくださ
+ い。)
+
+# openssl genrsa -des3 -out privkey.pem 2048 
+# openssl rsa -in privkey.pem -out privkey-nopass.pem 
+# openssl rsa -in privkey-nopass.pem -pubout -outform DER -out publickey.der
+
+ 上記のようにして生成した privkey-nopass.pem が秘密鍵として、
+ publickey.der が公開鍵として利用可能です。公開鍵は Google Apps のウェ
+ ブコンソールにてアップロードしておく必要があります。
+
+2.4. 設定 
+
+ここではアプリケーションの設定パラメータを一覧します。 
+
+apps.domain 
+  説明: Google Apps のドメイン名をセットします。 
+  例: 'example.com' 
+
+apps.privkey_filename 
+  説明: 2.3.2で生成した秘密鍵の場所をセットします。 
+  例: '/some/where/privkey_nopass.pem' 
+
+apps.auth_engine 
+  説明: 認証に使うモジュール名をセットします。 
+  例: 'pam' 
+
+apps.pam_appname 
+  説明: 認証やパスワード変更にPAMを使用する場合の識別名をセットします。 
+  例: 'gheimdall' 
+
+apps.uname_mapper 
+  説明: ユーザネームマッパのモジュール名をセットします。 
+  例: 'null' 
+
+apps.use_change_passwd 
+  説明: パスワード変更機能を使用するかどうかを True か False でセットします。 
+  例: True 
+
+apps.passwd_engine 
+  説明: パスワード変更に使うモジュール名をセットします。 
+  例: 'pam' 
+
+apps.passwd_regex 
+  説明: パスワードのポリシーを正規表現で指定できます。 
+  例: '^.{8,}$' 
+
+apps.use_header_auth 
+  説明: HTTP ヘッダを使った認証を行うかどうかを True か False でセットします。 
+  例: False 
+
+apps.auth_header_key 
+  説明: HTTP ヘッダを使った認証を行う場合のヘッダ名をセットします。 
+  例: 'SSL-CLIENT-S-DN-CN' 
+
+apps.domain_admin 
+  説明: Google Apps のドメイン管理者のユーザ名をセットします。 
+  例: 'admin' 
+
+apps.admin_passwd 
+  説明: Google Apps のドメイン管理者のパスワードをセットします。 
+  例: 'password' 
+
+apps.ldap_uri 
+  説明: ldap サーバの uri をセットします。 
+  例: 'ldap://ldap.example.com/' 
+
+apps.ldap_basedn 
+  説明: ldapsearch でのbasedn をセットします。 
+  例: 'dn=example,dn=com' 
+
+apps.ldap_filter 
+
+  説明: ldapsearch に使うフィルタのフォーマットです。%sはユーザ名に置換
+        されます。
+  例: 'uid=%s' 
+
+2.5. Apache の設定 
+
+GHeimdall は Apache の後ろで動かす事を想定しています。下記のどちらかの
+方法で設定を行ってください。
+
+ 2.5.1. mod_proxy で動かす 
+
+ samples/apache-modproxy.sample を参考にして Apache の設定を行ってくだ
+ さい。この場合、cherrypy の起動スクリプトが必要になるでしょう。
+ mod_proxy での動作確認はしていますが、次に述べる mod_python で動かす方
+ 法を推奨します。
+
+ 2.5.2. mod_python で動かす 
+
+ samples/apache-modpython.sample を /etc/httpd/conf.d/gheimdall.conf と
+ してコピーします。次に /etc/gheimdall ディレクトリを作成し、prod.cfg,
+ samples/modpython_gateway.py, およびsamples/gheimdall_modpython.py を
+ /etc/gheimdall にコピーします。
+
+2.6. PAM の設定 
+
+PAMの認証モジュールを使用する場合は、別途 PAM の設定が必要です。
+samples/pam.sample を参考にして、 /etc/pam.d/gheimdall ファイルを作成し、
+また PAM で使用するモジュールの設定を適切に行ってください。
+
+2.7. ログディレクトリの準備 
+
+デフォルトのログディレクトリは /var/log/gheimdall です。このディレクト
+リを作成し、gheimdall を動作させる uid/gid での書き込みが出来るように設
+定してください。例えば mod_python で動かした場合は、apache が書き込める
+ようにします。
+
+2.8. 起動 
+
+mod_proxy 経由で動かす場合は、apache とは別に cherrypy 上で GHeimdall
+を起動する必要があります。GHeimdall を起動するには下記のコマンドを実行
+してください。
+
+$ start-gheimdall.py /some/where/prod.cfg
+
+tcp の 8007 を listen しているか確認してください。 
+
+2.9. 起動スクリプト 
+
+起動スクリプトは準備中です。 
+
+3. GHeimdall の拡張 
+
+3.1. 共通の決まり事 
+
+独自に作成するモジュール内のクラスには、必ず _prepare(self, config) メ
+ソッドが必要です。このメソッド内では TurboGears 互換の config オブジェ
+クトを受け取って、実際のオペレーションに必要な設定値をインスタンス変数
+に保存します。また、モジュールのグローバルスコープの cls という変数に、
+作成したクラスを代入しておいてください。
+
+3.2. 認証モジュールの作成 
+
+独自の認証モジュールを作成するには、gheimdall/auth/ 以下にモジュールを
+作成し、そのモジュール内に gheimdall.auth.BaseAuthEngine を継承したクラ
+スを定義します。_prepare(self, config) と_authenticate(self,
+user_name, password) の二つのインスタンスメソッドを実装しなければなりま
+せん。gheimdall/auth/sample.py にサンプルモジュールがありますので参考に
+してください。
+
+下記にメソッド毎の決まり事を記します。 
+
+ 1) _authenticate(self, user_name, password)
+
+    認証成功時は True を返します。認証に失敗した場合は、
+    gheimdall.auth.AuthException を raise してください。
+
+ 2) _postAuthHook(self, user_name, password)
+
+    このメソッドはオプションです。認証後に実行したい処理がある場合はこ
+    のメソッド内で処理を行ってください。処理に失敗して、認証を失敗した
+    事にしたい場合は、 gheimdall.auth.AuthException を raise してくださ
+    い。
+
+3.3. パスワード変更モジュールの作成 
+
+独自のパスワード変更モジュールを作成するには、gheimdall/passwd 以下にモ
+ジュールを作成し、そのモジュール内に gheimdall.passwd.BasePasswdEngine
+かgheimdall.passwd.BaseSyncPasswdEngine のどちらかを継承したクラスを作
+成します。Sync が付いた方を継承すると、パスワード変更時に Google Apps
+のパスワードも変更する事ができます。インスタンスメソッドとし
+て、_prepare(self, config) と _changeLocalPassword(self, user_name,
+old_password, new_password) メソッドを実装しなければなりません。
+
+メソッドの決まり事を記します。 
+
+ 1) _changeLocalPassword(self, user_name, old_password, new_password)
+
+    パスワードの変更に成功した場合は、True を返します。失敗時には
+    gheimdall.passwd.PasswdException を raise してください。
+
+3.4. ユーザネームマッパモジュールの作成 
+
+独自のユーザネームマッパモジュールを作成するには、
+gheimdall/unamemapper 以下にモジュールを作成し、そのモジュール内に
+gheimdall.unamemapper.UnameMapper を継承したクラスを作成します。 インス
+タンスメソッドとして、_prepare(self, config) と
+getGoogleUsername(self, user_name) メソッドが必要です。
+
+ 1) getGoogleUsername(self, user_name)
+
+    ログインに使ったユーザ名をもとに、Google で使用するユーザ名を返しま
+    す。失敗した場合は gheimdall.auth.AuthException を raise してくださ
+    い。
+
+EOF

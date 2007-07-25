@@ -1,5 +1,3 @@
-#Here is the roadmap of GHeimdall.
-
 = Roadmap =
 
 Nothing yet. sorry.

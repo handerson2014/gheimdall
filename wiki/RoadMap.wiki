@@ -11,7 +11,6 @@ First, please remember that roadmap is just a roadmap :)
     will be released at the end of October 2007.
   * 0.9.5 - No plan yet
     will be released at the end of November 2007.
-  * 1.0.0 - SAML2.0 based fully implemented authentication provider
+  * 1.0.0 - SAML2.0 based fully implemented authentication provider.( What? Really? )
     will be released at the end of year 2007.
-
 

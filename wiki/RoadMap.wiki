@@ -1,13 +1,8 @@
-#summary One-sentence summary of this page.
+#Here is the roadmap of GHeimdall.
 
-= RoadMap =
+= Roadmap =
 
-Here is the roadmap of GHeimdall.
-
-= Details =
-
-Nothing yet
+Nothing yet. sorry.
   * Text in *bold* or _italic_
   * Headings, paragraphs, and lists
   * Automatic links to other wiki pages
-

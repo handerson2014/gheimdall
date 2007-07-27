@@ -1,15 +1,24 @@
 = Roadmap of GHeimdall =
 
 First, please remember that roadmap is just a roadmap :)
-  * 0.9.1 - enabled to send SHA1 hashed password to google
+  * 0.9.1
+    * enabled to send SHA1 hashed password to google
+    * fancy logo will be added
     will be released at the end of July 2007.
-  * 0.9.2 - Simple functionality of tracking user login status.
+  * 0.9.2
+    * Simple functionality of tracking user login status.
     will be released at the end of August 2007.
-  * 0.9.3 - No plan yet
+  * 0.9.3
+    * No plan yet
     will be released at the end of September 2007.
-  * 0.9.4 - No plan yet
+  * 0.9.4
+    * No plan yet
     will be released at the end of October 2007.
-  * 0.9.5 - No plan yet
+  * 0.9.5
+    * No plan yet
     will be released at the end of November 2007.
-  * 1.0.0 - SAML2.0 based fully implemented authentication provider.( What? Really? )
+  * 1.0.0
+    * SAML2.0 based fully implemented authentication provider.( What? Really? )
     will be released at the end of year 2007.
+
+

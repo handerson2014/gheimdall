@@ -100,10 +100,10 @@ class BaseSyncPasswdEngine(BasePasswdEngine):
     try:
       if not self.ready:
         self._login()
-        self.target_user = self.apps_client.RetrieveUser(user_name)
-        self.target_user.login.password = new_password
-        self.target_user = self.apps_client.UpdateUser(user_name,
-                                                       self.target_user)
+      self.target_user = self.apps_client.RetrieveUser(user_name)
+      self.target_user.login.password = new_password
+      self.target_user = self.apps_client.UpdateUser(user_name,
+                                                     self.target_user)
     except Exception,e:
       self._cleanup()
       # TODO: log something

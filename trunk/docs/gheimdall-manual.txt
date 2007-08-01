@@ -198,6 +198,11 @@ apps.admin_passwd
   description: Set password of the administrator of Google Apps domain
   example: 'password' 
 
+apps.hash_function_name
+  description: Set it to 'SHA-1' if you want to send hashed passwords
+  to google.
+  example: 'SHA-1'
+
 apps.ldap_uri 
   description: Set the uri for ldap server.
   example: 'ldap://ldap.example.com/' 

@@ -195,6 +195,10 @@ apps.admin_passwd
   説明: Google Apps のドメイン管理者のパスワードをセットします。 
   例: 'password' 
 
+apps.hash_function_name
+  説明: ハッシュしたパスワードを送りたい場合は 'SHA-1' をセットします。
+  例: 'SHA-1'
+
 apps.ldap_uri 
   説明: ldap サーバの uri をセットします。 
   例: 'ldap://ldap.example.com/' 

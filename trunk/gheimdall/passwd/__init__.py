@@ -30,6 +30,7 @@ except ImportError:
 import atom
 import gdata.apps
 import gdata.apps.service
+import sha
 
 ERR_UNKNOWN = 99
 ERR_FATAL = 98
@@ -78,6 +79,7 @@ class BaseSyncPasswdEngine(BasePasswdEngine):
     self.domain = config.get('apps.domain')
     self.domain_admin = config.get('apps.domain_admin')
     self.admin_passwd = config.get('apps.admin_passwd')
+    self.hash_function_name = config.get('apps.hash_function_name')
     self.ready = False
     self._prepare(config)
 
@@ -101,7 +103,12 @@ class BaseSyncPasswdEngine(BasePasswdEngine):
       if not self.ready:
         self._login()
       self.target_user = self.apps_client.RetrieveUser(user_name)
-      self.target_user.login.password = new_password
+      if self.hash_function_name == 'SHA-1':
+        sha_obj = sha.new(new_password)
+        self.target_user.login.password = sha_obj.hexdigest()
+        self.target_user.login.hash_function_name = 'SHA-1'
+      else:
+        self.target_user.login.password = new_password
       self.target_user = self.apps_client.UpdateUser(user_name,
                                                      self.target_user)
     except Exception,e:

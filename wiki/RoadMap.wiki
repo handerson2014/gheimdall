@@ -3,10 +3,11 @@
 First, please remember that roadmap is just a roadmap :)
   * 0.9.1
     * enabled to send SHA1 hashed password to google
-    will be released at the end of July 2007.
+    had released on August 1st 2007.
   * 0.9.2
     * Simple functionality of tracking user login status.
     * fancy logo will be added
+    * 'Remember me on this computer' checkbox will be added.
     will be released at the end of August 2007.
   * 0.9.3
     * No plan yet
@@ -20,4 +21,3 @@ First, please remember that roadmap is just a roadmap :)
   * 1.0.0
     * SAML2.0 based fully implemented authentication provider.( What? Really? )
     will be released at the end of year 2007.
-

@@ -288,9 +288,19 @@ class Root(controllers.RootController):
     if tg_exception is not None:
       log.error(tg_exception)
 
-    # First, check user_name value
+    # First, check user_name value from get parameter
     user_name = kw.get('user_name', None)
+
+    # Second, check user_name value from args
+    if user_name is None:
+      try:
+        user_name = args[0]
+      except:
+        pass
+
     backURL = ''
+
+    # Third, retrieve user_name value from session
     if user_name is None:
       # There must be an user_name in the session.
       user_name = cherrypy.session.get('user_name')

@@ -84,6 +84,7 @@ class BaseSyncPasswdEngine(BasePasswdEngine):
     self._prepare(config)
 
   def _login(self):
+    # TODO: use cPickle
     email = self.domain_admin + '@' + self.domain
     self.apps_client = gdata.apps.service.AppsService(
       email=email, domain=self.domain, password=self.admin_passwd,

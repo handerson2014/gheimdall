@@ -95,8 +95,10 @@ class LoginFormWidget(widgets.TableForm):
       'badType': _("The input must be a string (not a %(type)s: %(value)r)"),
       'noneType': _("The input must be a string (not None)"),
       }))
+    remember_me = widgets.CheckBox(
+      'remember_me', label=_('Remember me on this computer:'))
     super(LoginFormWidget, self).__init__(
       'login_form',
-      fields=[SAMLRequest, RelayState, user_name, password],
+      fields=[SAMLRequest, RelayState, user_name, password, remember_me],
       action=url('/login.do'),
       submit_text=_('Login'))

@@ -235,6 +235,20 @@ class Root(controllers.RootController):
       ret['tg_template'] = 'gheimdall.templates.gheimdall-login-success'
       return ret
 
+    remember_me = None
+    authenticated = None
+    try:
+      remember_me = cherrypy.session['remember_me']
+      authenticated = cherrypy.session['authenticated']
+    except KeyError:
+      # ignore KeyError
+      pass
+    if remember_me and authenticated:
+      ret = utils.createLoginDict(SAMLRequest, RelayState,
+                                  cherrypy.session['user_name'])
+      ret['tg_template'] = 'gheimdall.templates.gheimdall-login-success'
+      return ret
+      
     tg_exception = kw.get('tg_exceptions', None)
     if tg_exception is not None:
       log.error(tg_exception)
@@ -246,7 +260,9 @@ class Root(controllers.RootController):
   @exception_handler(login,
                      rules="isinstance(tg_exceptions,errors.GheimdallException)")
   @validate(form=login_form_widget)
-  def login_do(self, SAMLRequest, RelayState, user_name, password):
+  def login_do(self, SAMLRequest, RelayState, user_name, password,
+               **kw):
+    cherrypy.session['remember_me'] = kw.get('remember_me', False)
     if config.get('apps.use_header_auth', False):
       raise errors.GheimdallException(
         'You can not use this method when ' +

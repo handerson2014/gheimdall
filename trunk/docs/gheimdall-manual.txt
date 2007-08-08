@@ -242,12 +242,13 @@ If you use PAM authentication module, additionally you need configure
 PAM. Please copy samples/pam.sample to /etc/pam.d/gheimdall, and edit
 it appropriately. And you need to configure PAM module too.
 
-2.7. Prepare log directory
+2.7. Prepare directories
 
-By default, log directory is /var/log/gheimdall. Please make this
-directory, and configure permissions of this directory that GHeimdall
-running uid/gid can write in this direcotry. For example, if GHeimdall
-is running with mod_python, configure permissions for apache to write.
+By default, log directory is /var/log/gheimdall, and session files are
+stored in /var/gheimdall. Please make these directories, and configure
+permissions of these directories that GHeimdall running uid/gid can
+write in these direcotries. For example, if GHeimdall is running with
+mod_python, configure permissions for apache to write.
 
 2.8. Run GHeimdall
 

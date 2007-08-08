@@ -77,6 +77,7 @@ def createLoginDict(SAMLRequest, RelayState, user_name):
   # Preserve user_name in the session for changing password.
   cherrypy.session['user_name'] = user_name
   cherrypy.session['google_user_name'] = google_user_name
+  cherrypy.session['authenticated'] = True
   if RelayState.find('continue=https') >= 0:
     cherrypy.session['useSSL'] = True
 

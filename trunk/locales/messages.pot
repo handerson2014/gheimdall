@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2007-07-19 21:33\n"
+"POT-Creation-Date: 2007-08-08 16:15\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -15,20 +15,20 @@ msgstr ""
 "Generated-By: pygettext.py 1.5\n"
 
 
-#: gheimdall/controllers.py:262
+#: gheimdall/controllers.py:265
 msgid "Password is expired. You need to set new password."
 msgstr ""
 
-#: gheimdall/controllers.py:278
+#: gheimdall/controllers.py:281
 msgid "Can not login"
 msgstr ""
 
-#: gheimdall/controllers.py:302 gheimdall/controllers.py:319
+#: gheimdall/controllers.py:315 gheimdall/controllers.py:332
 #: gheimdall/templates/gheimdall-nopasswd.kid:title
 msgid "Changing password is not available here"
 msgstr ""
 
-#: gheimdall/controllers.py:331
+#: gheimdall/controllers.py:344
 msgid "Failed to change password"
 msgstr ""
 
@@ -57,7 +57,7 @@ msgstr ""
 #: gheimdall/templates/gheimdall-login.kid:h1
 #: gheimdall/templates/gheimdall-login.kid:title
 #: gheimdall/templates/login.kid:h1 gheimdall/templates/login.kid:title
-#: gheimdall/widgets.py:100
+#: gheimdall/widgets.py:104
 msgid "Login"
 msgstr ""
 
@@ -88,15 +88,15 @@ msgid "Your password has changed."
 msgstr ""
 
 #: gheimdall/templates/gheimdall-passwd.kid:h1
-#: gheimdall/templates/gheimdall-passwd.kid:title gheimdall/widgets.py:66
+#: gheimdall/templates/gheimdall-passwd.kid:title gheimdall/widgets.py:68
 msgid "Change password"
 msgstr ""
 
-#: gheimdall/templates/login.kid:label gheimdall/widgets.py:79
+#: gheimdall/templates/login.kid:label gheimdall/widgets.py:81
 msgid "User Name:"
 msgstr ""
 
-#: gheimdall/templates/login.kid:label gheimdall/widgets.py:88
+#: gheimdall/templates/login.kid:label gheimdall/widgets.py:90
 msgid "Password:"
 msgstr ""
 
@@ -141,39 +141,43 @@ msgid ""
 "    \"Internal Server Error\". It means we messed up."
 msgstr ""
 
-#: gheimdall/utils.py:58
+#: gheimdall/utils.py:60
 msgid "The value of SAMLRequest is wrong"
 msgstr ""
 
-#: gheimdall/widgets.py:33
+#: gheimdall/widgets.py:35
 msgid "New password does not match"
 msgstr ""
 
-#: gheimdall/widgets.py:48
+#: gheimdall/widgets.py:50
 msgid "Old password:"
 msgstr ""
 
-#: gheimdall/widgets.py:51
+#: gheimdall/widgets.py:53
 msgid "New password:"
 msgstr ""
 
-#: gheimdall/widgets.py:56
+#: gheimdall/widgets.py:58
 msgid "Input does not match our password policy"
 msgstr ""
 
-#: gheimdall/widgets.py:59
+#: gheimdall/widgets.py:61
 msgid "Confirm:"
 msgstr ""
 
-#: gheimdall/widgets.py:83 gheimdall/widgets.py:92
+#: gheimdall/widgets.py:85 gheimdall/widgets.py:94
 msgid "Please enter a value"
 msgstr ""
 
-#: gheimdall/widgets.py:84 gheimdall/widgets.py:93
+#: gheimdall/widgets.py:86 gheimdall/widgets.py:95
 msgid "The input must be a string (not a %(type)s: %(value)r)"
 msgstr ""
 
-#: gheimdall/widgets.py:85 gheimdall/widgets.py:94
+#: gheimdall/widgets.py:87 gheimdall/widgets.py:96
 msgid "The input must be a string (not None)"
+msgstr ""
+
+#: gheimdall/widgets.py:99
+msgid "Remember me on this computer:"
 msgstr ""
 

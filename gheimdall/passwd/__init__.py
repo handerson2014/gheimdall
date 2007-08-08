@@ -31,9 +31,13 @@ import atom
 import gdata.apps
 import gdata.apps.service
 import sha
+from gheimdall import appsclient
+import logging
 
 ERR_UNKNOWN = 99
 ERR_FATAL = 98
+
+log = logging.getLogger("gheimdall.controllers")
 
 class PasswdException(Exception):
   def __init__(self, reason, code=ERR_UNKNOWN):
@@ -80,17 +84,22 @@ class BaseSyncPasswdEngine(BasePasswdEngine):
     self.domain_admin = config.get('apps.domain_admin')
     self.admin_passwd = config.get('apps.admin_passwd')
     self.hash_function_name = config.get('apps.hash_function_name')
+    self.cpickle_directory = config.get('session_filter.storage_path')
     self.ready = False
     self._prepare(config)
 
   def _login(self):
     # TODO: use cPickle
-    email = self.domain_admin + '@' + self.domain
-    self.apps_client = gdata.apps.service.AppsService(
-      email=email, domain=self.domain, password=self.admin_passwd,
-      source='gheimdall')
-    self.apps_client.ProgrammaticLogin()
-    self.ready = True
+    try:
+      email = self.domain_admin + '@' + self.domain
+      self.apps_client = appsclient.getAppsClient(email, self.domain,
+                                                  self.admin_passwd,
+                                                  'gheimdall',
+                                                  self.cpickle_directory)
+      self.ready = True
+    except Exception, e:
+      log.error(e)
+      raise
     
   def _changeLocalPassword(self, user_name, old_password, new_password):
     raise NotImplementedError('Child class must implement me.')

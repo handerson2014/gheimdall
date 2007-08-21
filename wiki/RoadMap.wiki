@@ -10,14 +10,14 @@ First, please remember that roadmap is just a roadmap :)
     * 'Remember me on this computer' checkbox will be added.
     will be released at the end of August 2007.
   * 0.9.3
-    * No plan yet
+    * ElementTree based SAMLRequest and SAMLResponse
     will be released at the end of September 2007.
   * 0.9.4
-    * No plan yet
+    * formally support plural service providers
     will be released at the end of October 2007.
   * 0.9.5
     * No plan yet
     will be released at the end of November 2007.
   * 1.0.0
-    * SAML2.0 based fully implemented authentication provider.( What? Really? )
+    * SAML2.0 based fully implemented ID provider.( What? Really? )
     will be released at the end of year 2007.

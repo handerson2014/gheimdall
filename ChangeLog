@@ -1,3 +1,9 @@
+2007-08-24 10:00
+	* GHeimdall-0.9.2 released.
+	Added 'Remember me on this computer' checkbox. (Issue #4)
+	Implemented issue #5.
+	Changed session save directory.
+
 2007-08-01 06:35
 
 	* GHeimdall-0.9.1 released.

@@ -6,10 +6,10 @@ First, please remember that roadmap is just a roadmap :)
     had released on August 1st 2007.
   * 0.9.2
     * Share gdata apps client's auth token among all the processes.
-    * fancy logo will be added
     * 'Remember me on this computer' checkbox will be added.
-    will be released at the end of August 2007.
+    had released on August 23rd 2007.
   * 0.9.3
+    * fancy logo will be added
     * ElementTree based SAMLRequest and SAMLResponse
     will be released at the end of September 2007.
   * 0.9.4

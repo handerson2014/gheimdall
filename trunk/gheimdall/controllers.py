@@ -221,7 +221,11 @@ class Root(controllers.RootController):
       scheme = 'http'
     url = scheme + '://mail.google.com/a/' + config.get('apps.domain') + '/'
     # delete session data
-    cherrypy.session = dict()
+    cherrypy.session['remember_me'] = False
+    cherrypy.session['authenticated'] = False
+    cherrypy.session['user_name'] = None
+    cherrypy.session['useSSL'] = False
+    cherrypy.session['google_user_name'] = None
     return dict(url=url)
 
   @expose(template="gheimdall.templates.gheimdall-login")
@@ -240,8 +244,8 @@ class Root(controllers.RootController):
 
     remember_me = None
     authenticated = None
-    remember_me = cherrypy.session.get('remember_me', None)
-    authenticated = cherrypy.session.get('authenticated', None)
+    remember_me = cherrypy.session.get('remember_me', False)
+    authenticated = cherrypy.session.get('authenticated', False)
     if remember_me and authenticated:
       ret = utils.createLoginDict(SAMLRequest, RelayState,
                                   cherrypy.session.get('user_name'))

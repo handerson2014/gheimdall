@@ -25,7 +25,7 @@ __author__ = 'tmatsuo@sios.com (Takashi MATSUO)'
 
 # Release information about gheimdall
 
-version = "0.9.0"
+version = "0.9.2.1"
 
 description = "TurboGears Google SSO"
 long_description = "A small web application for Google Apps SSO service."

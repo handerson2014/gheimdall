@@ -23,6 +23,7 @@
 
 __author__ = 'tmatsuo@sios.com (Takashi MATSUO)'
 
+import os
 from turbogears import controllers, expose, flash, error_handler, validate
 from turbogears import exception_handler, config, errorhandling
 import cherrypy
@@ -36,6 +37,8 @@ except:
   has_turbomail = False
 
 __all__ = ['ErrorCatcher']
+
+os.umask(0007)
 
 log = logging.getLogger("gheimdall.controllers")
 login_form_widget = widgets.LoginFormWidget()

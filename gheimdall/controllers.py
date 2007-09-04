@@ -237,15 +237,11 @@ class Root(controllers.RootController):
 
     remember_me = None
     authenticated = None
-    try:
-      remember_me = cherrypy.session['remember_me']
-      authenticated = cherrypy.session['authenticated']
-    except KeyError:
-      # ignore KeyError
-      pass
+    remember_me = cherrypy.session.get('remember_me', None)
+    authenticated = cherrypy.session.get('authenticated', None)
     if remember_me and authenticated:
       ret = utils.createLoginDict(SAMLRequest, RelayState,
-                                  cherrypy.session['user_name'])
+                                  cherrypy.session.get('user_name'))
       ret['tg_template'] = 'gheimdall.templates.gheimdall-login-success'
       return ret
       

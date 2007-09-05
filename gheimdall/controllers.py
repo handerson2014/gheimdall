@@ -317,13 +317,21 @@ class Root(controllers.RootController):
       except:
         pass
 
-    backURL = ''
+    try: 
+      backURL = args[6]
+    except:
+      backURL = ''
 
     # Third, retrieve user_name value from session
     if user_name is None:
       # There must be an user_name in the session.
       user_name = cherrypy.session.get('user_name')
-      backURL = 'http://mail.google.com/a/%s/' % config.get('apps.domain')
+      useSSL = cherrypy.session.get('useSSL', False)
+      if useSSL:
+        scheme = 'https'
+      else:
+        scheme = 'http'
+      backURL = scheme + '://mail.google.com/a/%s/' % config.get('apps.domain')
       
     if user_name is None:
       raise errors.GheimdallException('Can not retrieve user name.')

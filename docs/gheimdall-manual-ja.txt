@@ -153,7 +153,7 @@ apps.domain
 
 apps.privkey_filename 
   説明: 2.3.2で生成した秘密鍵の場所をセットします。 
-  例: '/some/where/privkey_nopass.pem' 
+  例: '/some/where/privkey-nopass.pem' 
 
 apps.auth_engine 
   説明: 認証に使うモジュール名をセットします。 

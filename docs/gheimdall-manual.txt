@@ -282,7 +282,7 @@ have to implement _prepare(self, config) and _authenticate(self,
 user_name, password) instance methods. There is a sample module,
 gheimdall/auth/sample.py is for your reference.
 
-Following are the rules for eash methods.
+Following are the rules for each methods.
 
  1) _authenticate(self, user_name, password)
 
@@ -308,7 +308,7 @@ you have to implement _prepare(self, config) and
 _changeLocalPassword(self, user_name, old_password, new_password)
 instance methods.
 
-Following are the rules for eash methods.
+Following are the rules for each methods.
 
  1) _changeLocalPassword(self, user_name, old_password, new_password)
 

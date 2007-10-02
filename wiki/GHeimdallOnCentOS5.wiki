@@ -23,4 +23,6 @@
 # setenforce permissive
 }}}
 
-  * You can access GHeimdall through the URL http://example.com/gheimdall/.
+  * You can access GHeimdall through the URL http://example.com/gheimdall/
+
+Please enjoy!

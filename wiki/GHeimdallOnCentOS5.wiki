@@ -18,8 +18,9 @@
 # /etc/init.d/httpd restart
 }}}
 
-  * You can access GHeimdall through the URL http://example.com/gheimdall/.
   * Now, GHeimdall is not compatible with SELinux. You may have to set SELinux off.
 {{{
 # setenforce permissive
 }}}
+
+  * You can access GHeimdall through the URL http://example.com/gheimdall/.

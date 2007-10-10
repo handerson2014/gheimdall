@@ -1,3 +1,4 @@
+#labels Featured
 = Instructions for using GHeimdall on CentOS5 =
 
   * First, enable epel repository for TurboGears stuff.
@@ -8,8 +9,8 @@
 
   * Second, enable GHeimdall repository.
 {{{
-# wget http://gheimdall.googlecode.com/files/gheimdall-repos-5-1.noarch.rpm
-# rpm -ivh gheimdall-repos-5-1.noarch.rpm
+# wget http://gheimdall.googlecode.com/files/gheimdall-repos-5-3.noarch.rpm
+# rpm -ivh gheimdall-repos-5-3.noarch.rpm
 }}}
   * Finally, install gheimdall package, configure gheimdall appropriately, and restart httpd. That's all.
 {{{

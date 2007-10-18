@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:py="http://purl.org/kid/ns#"
       py:extends="'master.kid'">
 <head>
-  <title py:content="title">Title</title>
+  <title py:content="message">Title</title>
 </head>
 
 <body>
@@ -13,10 +13,10 @@
   <p>This is commonly known as an &quot;Error 500  &quot; or
     &quot;Internal Server Error&quot;. It means we messed up.</p>
 
-  <p py:if="programmer_notified">A programmer has been notified and
+  <p py:if="email_sent">A programmer has been notified and
     will try to fix the problem as soon as possible.</p>
 
-  <p py:if="not programmer_notified">The problem was actually so bad that
+  <p py:if="email_not_sent">The problem was actually so bad that
     we couldn't even send an E-mail to our team to sort the problem out!
     If you keep getting this message, please send us an E-mail with some
     information about what you were doing when this happened, so we can

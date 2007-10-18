@@ -102,24 +102,34 @@ msgstr "タイトルが入ります"
 #: gheimdall/templates/unhandled_exception.kid:h1
 msgid "Oops! An error occured"
 msgstr ""
+"システムエラーが発生しました。\n"
+"                "
 
 #: gheimdall/templates/unhandled_exception.kid:p
 msgid "-The Team"
 msgstr ""
+"--システム管理チームより\n"
+"                "
 
 #: gheimdall/templates/unhandled_exception.kid:p
 msgid ""
 "A programmer has been notified and\n"
 "    will try to fix the problem as soon as possible."
 msgstr ""
+"開発者に通知が届きました。彼らがなるべく早く問題を解決するはずです。\n"
+"                "
 
 #: gheimdall/templates/unhandled_exception.kid:p
 msgid "Our sincerest apologies,"
 msgstr ""
+"ご迷惑をおかけして申し訳ございません。\n"
+"                "
 
 #: gheimdall/templates/unhandled_exception.kid:p
 msgid "Something went wonky and we weren't expecting it. Sorry about that."
 msgstr ""
+"我々の想定していなかった問題が発生してしまいました。済みません。\n"
+"                "
 
 #: gheimdall/templates/unhandled_exception.kid:p
 msgid ""
@@ -129,12 +139,16 @@ msgid ""
 "    information about what you were doing when this happened, so we can\n"
 "    try and smooth things over :-)"
 msgstr ""
+"問題は深刻なようです。開発者に通知する事もできませんでしたので、我々に、あなたが何をしていてこうなったかをメールで伝えていただけますでしょうか。そうすれば我々は問題を解決する事ができるかもしれません。\n"
+"                "
 
 #: gheimdall/templates/unhandled_exception.kid:p
 msgid ""
 "This is commonly known as an \"Error 500  \" or\n"
 "    \"Internal Server Error\". It means we messed up."
 msgstr ""
+"「Error: 500」が発生しました。\n"
+"                "
 
 #: gheimdall/utils.py:60
 msgid "The value of SAMLRequest is wrong"

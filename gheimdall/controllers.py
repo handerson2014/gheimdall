@@ -25,7 +25,9 @@ __author__ = 'tmatsuo@sios.com (Takashi MATSUO)'
 
 import os
 from turbogears import controllers, expose, flash, error_handler, validate
-from turbogears import exception_handler, config, errorhandling
+from turbogears import exception_handler, config, errorhandling, identity
+import StringIO
+import traceback
 import cherrypy
 # from model import *
 import logging
@@ -81,8 +83,8 @@ class ErrorCatcher(controllers.RootController):
       502: u'502 - Bad Gateway',
   }
   _error_templates = {
-      None: '.templates.unhandled_exception',
-      404: '.templates.404_exception',
+      None: 'gheimdall.templates.unhandled_exception',
+      404: 'gheimdall.templates.404_exception',
   }
   admin_group_name = 'admin'
   output_format = 'html'
@@ -98,7 +100,6 @@ class ErrorCatcher(controllers.RootController):
 
   def cp_on_http_error(self, status, message):
     """Handle HTTP errors by sending an error page and email."""
-
     try:
       cherrypy._cputil._cp_on_http_error(status, message)
       error_msg = self.get_error_message(status, message)
@@ -127,11 +128,14 @@ class ErrorCatcher(controllers.RootController):
         try:
           self.send_exception_email(status, url, details)
           data['email_sent'] = True
+          data['email_not_sent'] = False
         except Exception, exc:
           log.exception('Error email failed: %s', exc)
           data['email_sent'] = False
+          data['email_not_sent'] = True
       else:
         data['email_sent'] = False
+        data['email_not_sent'] = True
 
       self.send_error_page(status, data)
     # don't catch SystemExit
@@ -145,7 +149,6 @@ class ErrorCatcher(controllers.RootController):
   def send_error_page(self, status, data):
     """Send error page using matching template from self._error_templates.
     """
-
     body = controllers._process_output(
         data,
         self._error_templates.get(status, self._error_templates.get(None)),
@@ -210,7 +213,7 @@ class ErrorCatcher(controllers.RootController):
 
     return self._error_codes.get(status, default or self._error_codes[None])
 
-class Root(controllers.RootController):
+class Root(ErrorCatcher):
 
   @expose(template="gheimdall.templates.gheimdall-logout")
   def logout(self):

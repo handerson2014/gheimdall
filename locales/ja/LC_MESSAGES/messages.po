@@ -15,11 +15,11 @@ msgstr ""
 "Generated-By: pygettext.py 1.5\n"
 
 
-#: gheimdall/controllers.py:265
+#: gheimdall/controllers.py:286
 msgid "Password is expired. You need to set new password."
 msgstr "パスワードの期限が切れています。新しいパスワードを設定してください。"
 
-#: gheimdall/controllers.py:281
+#: gheimdall/controllers.py:302
 msgid "Can not login"
 msgstr "ログインできません"
 
@@ -27,9 +27,13 @@ msgstr "ログインできません"
 msgid "Changing password is not available here"
 msgstr "ここではパスワードの変更は出来ません。"
 
-#: gheimdall/controllers.py:344
+#: gheimdall/controllers.py:373
 msgid "Failed to change password"
 msgstr "パスワードの変更に失敗しました。"
+
+#: gheimdall/templates/404_exception.kid:title
+msgid "404 - No such page here"
+msgstr "404 - そのようなページはありません     "
 
 #: gheimdall/templates/_error.kid:pre
 msgid "Traceback here."

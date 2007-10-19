@@ -57,6 +57,15 @@ ERROR_MAIL_TMPL = """\
 %(data)s
 """
 
+def strongly_expire(func):
+  """Decorator that sends headers that instruct browsers and proxies not to cache.
+  """
+  def newfunc(*args, **kwargs):
+    cherrypy.response.headers['Cache-Control'] = 'no-store, no-cache, must-revalidate, private'
+    cherrypy.response.headers['Pragma'] = 'no-cache'
+    return func(*args, **kwargs)
+  return newfunc                                      
+
 class ErrorCatcher(controllers.RootController):
   """Base class for RootControllers that catches errors in production mode.
 
@@ -216,6 +225,7 @@ class ErrorCatcher(controllers.RootController):
 class Root(ErrorCatcher):
 
   @expose(template="gheimdall.templates.gheimdall-logout")
+  @strongly_expire
   def logout(self):
     useSSL = cherrypy.session.get('useSSL')
     if useSSL:
@@ -229,9 +239,11 @@ class Root(ErrorCatcher):
     cherrypy.session['user_name'] = None
     cherrypy.session['useSSL'] = False
     cherrypy.session['google_user_name'] = None
+    cherrypy.response.headers['Cache-Control']
     return dict(url=url)
 
   @expose(template="gheimdall.templates.gheimdall-login")
+  @strongly_expire
   def login(self, SAMLRequest, RelayState, *args, **kw):
     if config.get('apps.use_header_auth'):
       # header auth
@@ -266,6 +278,7 @@ class Root(ErrorCatcher):
   @exception_handler(login,
                      rules="isinstance(tg_exceptions,errors.GheimdallException)")
   @validate(form=login_form_widget)
+  @strongly_expire
   def login_do(self, SAMLRequest, RelayState, user_name, password,
                **kw):
     cherrypy.session['remember_me'] = kw.get('remember_me', False)
@@ -305,6 +318,7 @@ class Root(ErrorCatcher):
     return utils.createLoginDict(SAMLRequest, RelayState, user_name)
 
   @expose(template="gheimdall.templates.gheimdall-passwd")
+  @strongly_expire
   def passwd(self, *args, **kw):
     tg_exception = kw.get('tg_exceptions', None)
     if tg_exception is not None:
@@ -354,6 +368,7 @@ class Root(ErrorCatcher):
   @exception_handler(passwd,
                      rules="isinstance(tg_exceptions,errors.GheimdallException)")
   @validate(form=passwd_form_widget)
+  @strongly_expire
   def passwd_do(self, user_name, old_password, new_password, password_confirm,
                 SAMLRequest, RelayState, backURL):
     # changing password

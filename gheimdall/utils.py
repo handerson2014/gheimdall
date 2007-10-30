@@ -33,6 +33,7 @@ import StringIO
 import cherrypy
 import zlib
 import base64
+import sha
 try:
   from xml.etree import ElementTree
 except ImportError:
@@ -42,6 +43,30 @@ from gheimdall import errors, unamemapper
 import logging
 
 log = logging.getLogger("gheimdall.controllers")
+
+righthand = '6789yuiophjknmYUIPHJKLNM'
+lefthand = '2345qwertasdfgzxcvbQWERTASDFGZXCVB'
+allchars = righthand + lefthand
+
+def hashPassword(password, hash_style):
+
+  if hash_style == '{SHA}':
+    return hash_style + base64.b64encode(sha.new(password).digest())
+
+  raise NotImplementedError('hash style is not implemented: %s.' % hash_style)
+
+def generateRandomPassword(length=8, alternate_hands=True):
+  rng = random.Random()
+  ret = ''
+  for i in range(length):
+    if not alternate_hands:
+      ret += rng.choice(allchars)
+    else:
+      if i%2:
+        ret += rng.choice(lefthand)
+      else:
+        ret += rng.choice(righthand)
+  return ret      
 
 def ldapEscape(source):
   ret = source

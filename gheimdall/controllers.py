@@ -46,6 +46,7 @@ log = logging.getLogger("gheimdall.controllers")
 login_form_widget = widgets.LoginFormWidget()
 passwd_form_widget = widgets.PasswdFormWidget(
   regex=config.get('apps.passwd_regex'))
+reset_form_widget = widgets.ResetFormWidget()
 
 ERROR_MAIL_TMPL = """\
 ----------URL----------
@@ -334,8 +335,10 @@ class Root(ErrorCatcher):
       except:
         pass
 
-    try: 
-      backURL = args[6]
+    try:
+      backURL = kw.get('backURL', '')
+      if backURL is None:
+        backURL = args[6]
     except:
       backURL = ''
 
@@ -395,3 +398,25 @@ class Root(ErrorCatcher):
       return ret
 
     return dict(user_name=user_name, backURL=backURL)
+
+  @expose(template="gheimdall.templates.gheimdall-reset-password")
+  @strongly_expire
+  def manage_reset_passwd(self):
+    passwd_engine = passwd.createPasswdEngine(
+      engine=config.get('apps.passwd_engine'),
+      config=config)
+    if config.get("apps.use_reset_passwd") and \
+         passwd_engine.hasResetPasswdCapability():
+      return dict(form=reset_form_widget, values={})
+    else:
+      raise cherrypy.HTTPError(404, "The path '/manage_reset_passwd' "
+                               "was not found.")
+
+  @expose(template="gheimdall.templates.gheimdall-reset-password-do")
+  @strongly_expire
+  def manage_reset_passwd_do(self, user_name):
+    passwd_engine = passwd.createPasswdEngine(
+      engine=config.get('apps.passwd_engine'),
+      config=config)
+    new_pass = passwd_engine.resetPassword(user_name)
+    return dict(user_name=user_name, new_pass=new_pass)

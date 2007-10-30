@@ -1,1 +1,7 @@
 $Id$
+
+IMPORTANT NOTE:
+
+Now GHeimdall has a functionality for resetting users'
+passwords. Please restrict access to the URL '/gheimdall/manage*'
+properly. Please see samples/apache-modpython.sample for examples.

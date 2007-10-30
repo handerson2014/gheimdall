@@ -33,6 +33,7 @@ import gdata.apps.service
 import sha
 from gheimdall import appsclient
 import logging
+from gheimdall import utils
 
 ERR_UNKNOWN = 99
 ERR_FATAL = 98
@@ -52,6 +53,10 @@ class BasePasswdEngine(object):
   def __init__(self, config):
     self._prepare(config)
     
+  def hasResetPasswdCapability(self):
+
+    return False
+
   def changePassword(self, user_name, old_password, new_password):
     self._changeLocalPassword(user_name, old_password, new_password)
     try:
@@ -67,18 +72,56 @@ class BasePasswdEngine(object):
                               ERR_FATAL)
     return True
 
+  def resetPassword(self, user_name):
+
+    self._retrieveGoogleUser(user_name)
+    self._checkLocalUser(user_name)
+    new_password = utils.generateRandomPassword()
+    self._resetLocalPassword(user_name, new_password)
+    try:
+      self._changeGooglePassword(user_name, new_password)
+    except Exception, e1:
+      try:
+        self._revertLocalPassword(user_name)
+      except Exception, e2:
+        raise PasswdException("Failed rollback password. " + str(e2),
+                              ERR_FATAL)
+      else:
+        raise PasswdException("Failed to change google password. " + str(e1),
+                              ERR_FATAL)
+    return new_password
+
   def _changeGooglePassword(self, user_name, new_password):
 
     return True
 
   def _changeLocalPassword(self, user_name, old_password, new_password):
+
+    raise NotImplementedError('Child class must implement me.')
+
+  def _checkGoogleUser(self, user_name):
+
+    return True
+
+  def _checkLocalUser(self, user_name):
+
+    raise NotImplementedError('Child class must implement me.')
+
+  def _revertLocalPassword(self, user_name):
+
+    raise NotImplementedError('Child class must implement me.')
+    
+  def _resetLocalPassword(self, user_name, new_password):
+
     raise NotImplementedError('Child class must implement me.')
 
   def _prepare(self, config):
     raise NotImplementedError('Child class must implement me.')
 
 class BaseSyncPasswdEngine(BasePasswdEngine):
-
+  max_trial = 5
+  target_user = None
+  
   def __init__(self, config):
     self.domain = config.get('apps.domain')
     self.domain_admin = config.get('apps.domain_admin')
@@ -89,7 +132,7 @@ class BaseSyncPasswdEngine(BasePasswdEngine):
     self._prepare(config)
 
   def _login(self):
-    # TODO: use cPickle
+
     try:
       email = self.domain_admin + '@' + self.domain
       self.apps_client = appsclient.getAppsClient(email, self.domain,
@@ -107,12 +150,33 @@ class BaseSyncPasswdEngine(BasePasswdEngine):
   def _prepare(self, config):
     raise NotImplementedError('Child class must implement me.')
 
+  def _retrieveGoogleUser(self, user_name, num_tried=0):
+
+    if self.target_user is not None:
+      return True
+    
+    if num_tried > self.max_trial:
+      raise PasswdException('Can not retrieve user: %s.' % user_name,
+                            ERR_FATAL)
+    try:
+      if not self.ready:
+        self._login()
+      self.target_user = self.apps_client.RetrieveUser(user_name)
+    except Exception, e:
+      if (isinstance(e, gdata.apps.service.AppsForYourDomainException) and
+          e.error_code == gdata.apps.service.UNKOWN_ERROR):
+        return self._checkGoogleUser(user_name, num_tried+1)
+      self._cleanup()
+      raise PasswdException('Can not retrieve user: %s.' % user_name,
+                            ERR_FATAL)
+    return True
+
   def _changeGooglePassword(self, user_name, new_password):
 
     try:
       if not self.ready:
         self._login()
-      self.target_user = self.apps_client.RetrieveUser(user_name)
+      self._retrieveGoogleUser(user_name)
       if self.hash_function_name == 'SHA-1':
         sha_obj = sha.new(new_password)
         self.target_user.login.password = sha_obj.hexdigest()
@@ -123,8 +187,8 @@ class BaseSyncPasswdEngine(BasePasswdEngine):
                                                      self.target_user)
     except Exception,e:
       self._cleanup()
-      # TODO: log something
-      raise PasswdException("Failed to change google password.", ERR_FATAL)
+      log.error(e)
+      raise
 
     self._cleanup()
     return True
@@ -132,6 +196,7 @@ class BaseSyncPasswdEngine(BasePasswdEngine):
   def _cleanup(self):
 
     del(self.apps_client)
+    self.ready = False
 
 def createPasswdEngine(engine, config):
 

@@ -10,3 +10,9 @@
     ProxyPass http://localhost:8007/gheimdall
     ProxyPassReverse http://localhost:8007/gheimdall
 </Location>
+
+<Location /gheimdall/manage*>
+    Order deny,allow
+    deny from All
+    allow from 127.0.0.1
+</Location>

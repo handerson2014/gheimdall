@@ -7,3 +7,9 @@
     PythonPath sys.path+['/etc/gheimdall']
     PythonDebug on
 </Location>
+
+<Location /gheimdall/manage*>
+    Order deny,allow
+    deny from All
+    allow from 127.0.0.1
+</Location>

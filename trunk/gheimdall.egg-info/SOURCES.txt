@@ -14,6 +14,7 @@ test.cfg
 docs/gheimdall-manual-ja.txt
 docs/gheimdall-manual.txt
 gheimdall/__init__.py
+gheimdall/appsclient.py
 gheimdall/controllers.py
 gheimdall/errors.py
 gheimdall/json.py
@@ -41,11 +42,13 @@ gheimdall/passwd/ldappasswd.py
 gheimdall/passwd/pam.py
 gheimdall/static/css/style.css
 gheimdall/static/images/favicon.ico
+gheimdall/static/images/gheimdall.png
 gheimdall/static/images/header_inner.png
 gheimdall/static/images/info.png
 gheimdall/static/images/ok.png
 gheimdall/static/images/tg_under_the_hood.png
 gheimdall/static/images/under_the_hood_blue.png
+gheimdall/templates/404_exception.kid
 gheimdall/templates/__init__.py
 gheimdall/templates/_error.kid
 gheimdall/templates/gheimdall-login-success.kid

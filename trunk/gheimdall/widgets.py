@@ -102,3 +102,21 @@ class LoginFormWidget(widgets.TableForm):
       fields=[SAMLRequest, RelayState, user_name, password, remember_me],
       action=url('/login.do'),
       submit_text=_('Login'))
+
+class ResetFormWidget(widgets.TableForm):
+
+  def __init__(self):
+    user_name = widgets.TextField(
+      'user_name', label=_('User Name:'), attrs=dict(size=16),
+      validator=validators.UnicodeString(
+      not_empty=True,
+      messages = {
+      'empty': _("Please enter a value"),
+      'badType': _("The input must be a string (not a %(type)s: %(value)r)"),
+      'noneType': _("The input must be a string (not None)"),
+      }))
+    super(ResetFormWidget, self).__init__(
+      'reset_form',
+      fields=[user_name],
+      action=url('/manage_reset_passwd.do'),
+      submit_text=_('Reset'))

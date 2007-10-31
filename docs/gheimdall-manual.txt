@@ -174,6 +174,10 @@ apps.use_change_passwd
   description: Set whether you want use change-passwords functionality.
   example: True
 
+apps.use_reset_passwd
+  description: Set whether you want use reset-passwords functionality.
+  example: False
+
 apps.passwd_engine 
   description: Set module name for change-passwords functionality.
   example: 'pam' 
@@ -212,10 +216,21 @@ apps.ldap_basedn
   example: 'dn=example,dn=com' 
 
 apps.ldap_filter 
-
   description: Set format of the filter for ldapsearch. %s is replaced
                with user name.
   example: 'uid=%s' 
+
+apps.ldap_rootdn
+  description: Set ldap's admin distinguished name.
+  example: 'cn=admin,dc=example,dc=com'
+
+apps.ldap_rootpw
+  description: Set ldap's admin password.
+  example: 'password'
+
+apps.ldap_passwd_hash_style
+  description: Set ldap password hash style.
+  example: '{SHA}'
 
 2.5. Apache settings
 

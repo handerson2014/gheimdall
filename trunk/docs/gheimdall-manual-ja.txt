@@ -171,6 +171,11 @@ apps.use_change_passwd
   説明: パスワード変更機能を使用するかどうかを True か False でセットします。 
   例: True 
 
+apps.use_reset_passwd
+  説明: パスワードリセット機能を使用するかどうかを True か False でセッ
+        トします。
+  例: False
+
 apps.passwd_engine 
   説明: パスワード変更に使うモジュール名をセットします。 
   例: 'pam' 
@@ -208,10 +213,21 @@ apps.ldap_basedn
   例: 'dn=example,dn=com' 
 
 apps.ldap_filter 
-
   説明: ldapsearch に使うフィルタのフォーマットです。%sはユーザ名に置換
         されます。
   例: 'uid=%s' 
+
+apps.ldap_rootdn
+  説明: ldap 管理者の dn を設定します。
+  例: 'cn=admin,dc=example,dc=com'
+
+apps.ldap_rootpw
+  説明: ldap 管理者のパスワードを設定します。
+  例: 'password'
+
+apps.ldap_passwd_hash_style
+  説明: ldap に格納するパスワードのハッシュ方法を設定します。
+  例: '{SHA}'
 
 2.5. Apache の設定 
 

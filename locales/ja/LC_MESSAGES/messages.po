@@ -15,11 +15,11 @@ msgstr ""
 "Generated-By: pygettext.py 1.5\n"
 
 
-#: gheimdall/controllers.py:286
+#: gheimdall/controllers.py:300
 msgid "Password is expired. You need to set new password."
 msgstr "パスワードの期限が切れています。新しいパスワードを設定してください。"
 
-#: gheimdall/controllers.py:302
+#: gheimdall/controllers.py:316
 msgid "Can not login"
 msgstr "ログインできません"
 
@@ -27,7 +27,7 @@ msgstr "ログインできません"
 msgid "Changing password is not available here"
 msgstr "ここではパスワードの変更は出来ません。"
 
-#: gheimdall/controllers.py:373
+#: gheimdall/controllers.py:391
 msgid "Failed to change password"
 msgstr "パスワードの変更に失敗しました。"
 
@@ -87,7 +87,17 @@ msgstr "パスワードが変更されました。"
 msgid "Change password"
 msgstr "パスワードの変更"
 
-#: gheimdall/templates/login.kid:label gheimdall/widgets.py:81
+#: gheimdall/templates/gheimdall-reset-password.kid:title
+msgid "Reset User's password"
+msgstr "パスワードのリセット"
+
+#: gheimdall/templates/gheimdall-reset-password-do.kid:p
+msgid "Password was reset."
+msgstr ""
+"パスワードはリセットされました。\n"
+"                "
+
+#: gheimdall/widgets.py:110
 msgid "User Name:"
 msgstr ""
 "ユーザー名:\n"
@@ -154,7 +164,7 @@ msgstr ""
 "「Error: 500」が発生しました。\n"
 "                "
 
-#: gheimdall/utils.py:60
+#: gheimdall/utils.py:85
 msgid "The value of SAMLRequest is wrong"
 msgstr "SAMLRequest の値が不正です"
 
@@ -182,17 +192,17 @@ msgstr "パスワードポリシーに合致しません"
 msgid "Confirm:"
 msgstr "もう一度: "
 
-#: gheimdall/widgets.py:85 gheimdall/widgets.py:94
+#: gheimdall/widgets.py:85 gheimdall/widgets.py:94 gheimdall/widgets.py:114
 msgid "Please enter a value"
 msgstr ""
 "入力してください    \n"
 "                "
 
-#: gheimdall/widgets.py:86 gheimdall/widgets.py:95
+#: gheimdall/widgets.py:86 gheimdall/widgets.py:95 gheimdall/widgets.py:115
 msgid "The input must be a string (not a %(type)s: %(value)r)"
 msgstr "文字列を入力してください (%(type)s: %(value)r ではなく)"
 
-#: gheimdall/widgets.py:87 gheimdall/widgets.py:96
+#: gheimdall/widgets.py:87 gheimdall/widgets.py:96 gheimdall/widgets.py:116
 msgid "The input must be a string (not None)"
 msgstr "文字列を入力してください (None ではなく)"
 
@@ -200,5 +210,11 @@ msgstr "文字列を入力してください (None ではなく)"
 msgid "Remember me on this computer:"
 msgstr ""
 "次回は入力を省略:\n"
+"                "
+
+#: gheimdall/widgets.py:122
+msgid "Reset"
+msgstr ""
+"リセット\n"
 "                "
 

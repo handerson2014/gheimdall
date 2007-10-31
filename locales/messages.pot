@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2007-10-18 16:02\n"
+"POT-Creation-Date: 2007-10-31 09:35\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -15,20 +15,20 @@ msgstr ""
 "Generated-By: pygettext.py 1.5\n"
 
 
-#: gheimdall/controllers.py:286
+#: gheimdall/controllers.py:300
 msgid "Password is expired. You need to set new password."
 msgstr ""
 
-#: gheimdall/controllers.py:302
+#: gheimdall/controllers.py:316
 msgid "Can not login"
 msgstr ""
 
-#: gheimdall/controllers.py:344 gheimdall/controllers.py:361
+#: gheimdall/controllers.py:361 gheimdall/controllers.py:379
 #: gheimdall/templates/gheimdall-nopasswd.kid:title
 msgid "Changing password is not available here"
 msgstr ""
 
-#: gheimdall/controllers.py:373
+#: gheimdall/controllers.py:391
 msgid "Failed to change password"
 msgstr ""
 
@@ -97,7 +97,19 @@ msgstr ""
 msgid "Change password"
 msgstr ""
 
+#: gheimdall/templates/gheimdall-reset-password-do.kid:h1
+#: gheimdall/templates/gheimdall-reset-password-do.kid:title
+#: gheimdall/templates/gheimdall-reset-password.kid:h1
+#: gheimdall/templates/gheimdall-reset-password.kid:title
+msgid "Reset User's password"
+msgstr ""
+
+#: gheimdall/templates/gheimdall-reset-password-do.kid:p
+msgid "Password was reset."
+msgstr ""
+
 #: gheimdall/templates/login.kid:label gheimdall/widgets.py:81
+#: gheimdall/widgets.py:110
 msgid "User Name:"
 msgstr ""
 
@@ -146,7 +158,7 @@ msgid ""
 "    \"Internal Server Error\". It means we messed up."
 msgstr ""
 
-#: gheimdall/utils.py:60
+#: gheimdall/utils.py:85
 msgid "The value of SAMLRequest is wrong"
 msgstr ""
 
@@ -170,19 +182,23 @@ msgstr ""
 msgid "Confirm:"
 msgstr ""
 
-#: gheimdall/widgets.py:85 gheimdall/widgets.py:94
+#: gheimdall/widgets.py:85 gheimdall/widgets.py:94 gheimdall/widgets.py:114
 msgid "Please enter a value"
 msgstr ""
 
-#: gheimdall/widgets.py:86 gheimdall/widgets.py:95
+#: gheimdall/widgets.py:86 gheimdall/widgets.py:95 gheimdall/widgets.py:115
 msgid "The input must be a string (not a %(type)s: %(value)r)"
 msgstr ""
 
-#: gheimdall/widgets.py:87 gheimdall/widgets.py:96
+#: gheimdall/widgets.py:87 gheimdall/widgets.py:96 gheimdall/widgets.py:116
 msgid "The input must be a string (not None)"
 msgstr ""
 
 #: gheimdall/widgets.py:99
 msgid "Remember me on this computer:"
+msgstr ""
+
+#: gheimdall/widgets.py:122
+msgid "Reset"
 msgstr ""
 

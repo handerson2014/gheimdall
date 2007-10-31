@@ -214,7 +214,5 @@ msgstr ""
 
 #: gheimdall/widgets.py:122
 msgid "Reset"
-msgstr ""
-"リセット\n"
-"                "
+msgstr "リセット"
 

@@ -232,6 +232,26 @@ apps.ldap_passwd_hash_style
   description: Set ldap password hash style.
   example: '{SHA}'
 
+error_catcher.sender_email
+  description: Set sender of error mail.
+  example: 'root@localhost'
+
+error_catcher.admin_email
+  description: Set reciepient of error mail.
+  example: 'root@localhost'
+
+error_catcher.smtp_host
+  description: Set smtp host for error mail.
+  example: 'localhost'
+
+mail.on
+  description: Set to True if you want to use TurboMail.
+  example: True
+
+mail.server
+  description: Set smtp host for error mail(when using TurboMail).
+  example: 'localhost'
+
 2.5. Apache settings
 
 GHeimdall is designed to run behind apache. You can choose one of the

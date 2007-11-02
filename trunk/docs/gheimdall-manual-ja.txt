@@ -229,6 +229,26 @@ apps.ldap_passwd_hash_style
   説明: ldap に格納するパスワードのハッシュ方法を設定します。
   例: '{SHA}'
 
+error_catcher.sender_email
+  説明: エラーメールの送信者を設定します。
+  例: 'root@localhost'
+
+error_catcher.admin_email
+  説明: エラーメールの受信者を設定します。
+  例: 'root@localhost'
+
+error_catcher.smtp_host
+  説明: エラーメールを送る smtp host を設定します。
+  例: 'localhost'
+
+mail.on
+  説明: エラーメールの送信に TurboMail を使用する場合は True を設定します。
+  例: True
+
+mail.server
+  説明: TurboMail を使用する場合の smtp host を設定します。
+  example: 'localhost'
+
 2.5. Apache の設定 
 
 GHeimdall は Apache の後ろで動かす事を想定しています。下記のどちらかの

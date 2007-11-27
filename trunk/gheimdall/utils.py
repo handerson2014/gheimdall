@@ -93,8 +93,8 @@ def createLoginDict(SAMLRequest, RelayState, user_name):
   
   # create response
   sp_setting = config.get('apps.service_providers')
-  module_name = sp_setting.get(issuer,
-                               config.get("apps.default_response_creator", "default"))
+  module_name = sp_setting.get(
+    issuer, config.get("apps.default_response_creator","default"))
   response_creator = responsecreator.create(module_name, config)
 
   # create saml response
@@ -111,8 +111,7 @@ def createLoginDict(SAMLRequest, RelayState, user_name):
   if RelayState.find('continue=https') >= 0:
     cherrypy.session['useSSL'] = True
 
-  return dict(acsURL=acsURL,
-              SAMLResponse=encoded_response,
+  return dict(acsURL=acsURL, SAMLResponse=encoded_response,
               RelayState=RelayState)
 
 def createID():

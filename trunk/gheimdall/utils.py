@@ -100,8 +100,6 @@ def createLoginDict(SAMLRequest, RelayState, user_name):
   # create saml response
   saml_response = response_creator.createSamlResponse(user_name)
 
-  print type(saml_response)
-
   signed_response = saml2.utils.sign(saml_response.ToString(),
                                      config.get('apps.privkey_filename'))
   encoded_response = base64.encodestring(signed_response)

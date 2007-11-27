@@ -5,9 +5,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2007-05-30 13:50\n"
+"POT-Creation-Date: 2007-10-31 09:35\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Takashi Matsuo <tmatsuo@sios.com>\n"
+"Last-Translator: Yang Hsiaofeng <g-yo@sios.com>\n"
 "Language-Team: psg-tech <psg-tech@sios.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
@@ -17,117 +17,117 @@ msgstr ""
 
 #: gheimdall/controllers.py:300
 msgid "Password is expired. You need to set new password."
-msgstr "パスワードの期限が切れています。新しいパスワードを設定してください。"
+msgstr "密码已过期,请设置新密码。"
 
 #: gheimdall/controllers.py:316
 msgid "Can not login"
-msgstr "ログインできません"
+msgstr "无法登陆。"
 
 #: gheimdall/templates/gheimdall-nopasswd.kid:title
 msgid "Changing password is not available here"
-msgstr "ここではパスワードの変更は出来ません。"
+msgstr "无法变更密码。"
 
 #: gheimdall/controllers.py:391
 msgid "Failed to change password"
-msgstr "パスワードの変更に失敗しました。"
+msgstr "变更密码失败"
 
 #: gheimdall/templates/404_exception.kid:title
 msgid "404 - No such page here"
-msgstr "404 - そのようなページはありません     "
+msgstr "404 -不存在本网页"
 
 #: gheimdall/templates/_error.kid:pre
 msgid "Traceback here."
-msgstr ""
+msgstr "Traceback here."
 
 #: gheimdall/templates/_error.kid:span
 msgid "Error occurred."
-msgstr "エラーが発生しました。"
+msgstr "发生错误"
 
 #: gheimdall/templates/unhandled_exception.kid:title
 msgid "Title"
-msgstr "タイトル"
+msgstr "题目"
 
 #: gheimdall/templates/gheimdall-logout.kid:font
 msgid "Please wait a second..."
-msgstr "お待ちください...      "
+msgstr "请稍等"
 
 #: gheimdall/templates/gheimdall-login-success.kid:title
 msgid "Logging in..."
-msgstr "ログインしています..."
+msgstr "正在登陆..."
 
 #: gheimdall/widgets.py:104
 msgid "Login"
-msgstr "ログイン"
+msgstr "登陆"
 
 #: gheimdall/templates/gheimdall-logout.kid:a
 msgid "Login again"
-msgstr "もう一度ログインする"
+msgstr "重新登陆"
 
 #: gheimdall/templates/gheimdall-logout.kid:font
 msgid "Logged out"
-msgstr "ログアウトしました"
+msgstr "退出系统"
 
 #: gheimdall/templates/gheimdall-logout.kid:title
 msgid "Logging out..."
-msgstr "ログアウトしています..."
+msgstr "正在退出系统..."
 
 #: gheimdall/templates/gheimdall-nopasswd.kid:h1
 msgid "Not available"
-msgstr "パスワードの変更はできません"
+msgstr "无法变更密码"
 
 #: gheimdall/templates/gheimdall-passwd.kid:a
 msgid "Back"
-msgstr "戻る"
+msgstr "退回"
 
 #: gheimdall/templates/gheimdall-passwd-success.kid:title
 msgid "Your password has changed."
-msgstr "パスワードが変更されました。"
+msgstr "密码已被更改。"
 
 #: gheimdall/templates/gheimdall-passwd.kid:title gheimdall/widgets.py:68
 msgid "Change password"
-msgstr "パスワードの変更"
+msgstr "修改密码"
 
 #: gheimdall/templates/gheimdall-reset-password.kid:title
 msgid "Reset User's password"
-msgstr "パスワードのリセット"
+msgstr "重新设定密码"
 
 #: gheimdall/templates/gheimdall-reset-password-do.kid:p
 msgid "Password was reset."
-msgstr "パスワードはリセットされました。\n"
+msgstr "密码已被更改。"
 
 #: gheimdall/widgets.py:110
 msgid "User Name:"
-msgstr "ユーザー名:\n"
+msgstr "用户名:"
 
 #: gheimdall/templates/login.kid:label gheimdall/widgets.py:90
 msgid "Password:"
-msgstr "パスワード:\n"
+msgstr "密码:"
 
 #: gheimdall/templates/master.kid:title
 msgid "Your title goes here"
-msgstr "タイトルが入ります"
+msgstr "请在此处填写题目"
 
 #: gheimdall/templates/unhandled_exception.kid:h1
 msgid "Oops! An error occured"
-msgstr "システムエラーが発生しました。\n"
+msgstr "系统错误"
 
 #: gheimdall/templates/unhandled_exception.kid:p
 msgid "-The Team"
-msgstr "--システム管理チームより\n"
+msgstr "系统管理团队"
 
 #: gheimdall/templates/unhandled_exception.kid:p
 msgid ""
 "A programmer has been notified and\n"
 "    will try to fix the problem as soon as possible."
-msgstr "開発者に通知が届きました。彼らがなるべく早く問題を解決するはずです。\n"
+msgstr "已通知系统管理人员,他们会尽快修复系统故障。"
 
 #: gheimdall/templates/unhandled_exception.kid:p
 msgid "Our sincerest apologies,"
-msgstr "ご迷惑をおかけして申し訳ございません。\n"
+msgstr "非常抱歉给您带来了不便。"
 
 #: gheimdall/templates/unhandled_exception.kid:p
 msgid "Something went wonky and we weren't expecting it. Sorry about that."
-msgstr "我々の想定していなかった問題が発生してしまいました。済みません。\n"
+msgstr "非常抱歉,发生了预料之外的错误。"
 
 #: gheimdall/templates/unhandled_exception.kid:p
 msgid ""
@@ -136,55 +136,56 @@ msgid ""
 "    If you keep getting this message, please send us an E-mail with some\n"
 "    information about what you were doing when this happened, so we can\n"
 "    try and smooth things over :-)"
-msgstr "問題は深刻なようです。開発者に通知する事もできませんでしたので、我々に、あなたが何をしていてこうなったかをメールで伝えていただけますでしょうか。そうすれば我々は問題を解決する事ができるかもしれません。\n"
+msgstr "系统发生严重错误,且无法通知开发管理人员,请用E-MAIL通知我们错误发生的详细经过.将有助于我们尽快修复系统。:-)"
 
 #: gheimdall/templates/unhandled_exception.kid:p
 msgid ""
 "This is commonly known as an \"Error 500  \" or\n"
 "    \"Internal Server Error\". It means we messed up."
-msgstr "「Error: 500」が発生しました。\n"
+msgstr "「Error: 500」错误发生。\n"
 
 #: gheimdall/utils.py:85
 msgid "The value of SAMLRequest is wrong"
-msgstr "SAMLRequest の値が不正です"
+msgstr "SAMLRequest参数错误。"
 
 #: gheimdall/widgets.py:35
 msgid "New password does not match"
-msgstr "新しいパスワードが一致しません"
+msgstr "确认密码输入错误"
 
 #: gheimdall/widgets.py:50
 msgid "Old password:"
-msgstr "今までのパスワード:\n"
+msgstr "旧密码:\n"
 
 #: gheimdall/widgets.py:53
 msgid "New password:"
-msgstr "新しいパスワード:\n"
+msgstr "新密码:\n"
 
 #: gheimdall/widgets.py:58
 msgid "Input does not match our password policy"
-msgstr "パスワードポリシーに合致しません"
+msgstr "不符合密码设置原则。"
 
 #: gheimdall/widgets.py:61
 msgid "Confirm:"
-msgstr "もう一度: "
+msgstr "确认: "
 
 #: gheimdall/widgets.py:85 gheimdall/widgets.py:94 gheimdall/widgets.py:114
 msgid "Please enter a value"
-msgstr "入力してください    \n"
+msgstr "请输入    \n"
 
 #: gheimdall/widgets.py:86 gheimdall/widgets.py:95 gheimdall/widgets.py:115
 msgid "The input must be a string (not a %(type)s: %(value)r)"
-msgstr "文字列を入力してください (%(type)s: %(value)r ではなく)"
+msgstr "必须输入字符串 (%(type)s: %(value)r )"
 
 #: gheimdall/widgets.py:87 gheimdall/widgets.py:96 gheimdall/widgets.py:116
 msgid "The input must be a string (not None)"
-msgstr "文字列を入力してください (None ではなく)"
+msgstr "必须输入字符串(空白不可)"
 
 #: gheimdall/widgets.py:99
 msgid "Remember me on this computer:"
-msgstr "次回は入力を省略:\n"
+msgstr "记住我:"
 
 #: gheimdall/widgets.py:122
 msgid "Reset"
-msgstr "リセット"
+msgstr "重置"
+
 

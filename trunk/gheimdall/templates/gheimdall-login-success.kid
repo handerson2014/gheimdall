@@ -13,8 +13,8 @@
     <div style="display: none">
       <textarea rows="10" cols="80" name="SAMLResponse">${SAMLResponse}</textarea>
       <textarea rows="10" cols="80" name="RelayState" py:content="RelayState"></textarea>
-      <input type="submit" value="login"/>
     </div>
+    <input type="submit" py:attrs="value=_('Login')"/>
   </form>
 </body>
 </html>

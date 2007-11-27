@@ -1,0 +1,106 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+#
+#   GHeimdall - A small web application for Google Apps SSO service.
+#   Copyright (C) 2007 SIOS Technology, Inc.
+#
+#   This program is free software: you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation, either version 2 of the License, or
+#   (at your option) any later version.
+#
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+#
+#   You should have received a copy of the GNU General Public License
+#   along with this program; if not, write to the Free Software
+#   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+#   USA.
+#
+#   $Id$
+
+__author__ = 'tmatsuo@sios.com (Takashi MATSUO)'
+
+import saml2
+import saml2.utils
+import xmldsig as ds
+from saml2 import saml, samlp
+
+EMPTY_SAML_RESPONSE="""<?xml version="1.0" encoding="UTF-8"?>
+<samlp:Response Version="2.0"
+  xmlns="urn:oasis:names:tc:SAML:2.0:assertion"
+  xmlns:samlp="urn:oasis:names:tc:SAML:2.0:protocol">
+  <samlp:Status>
+    <samlp:StatusCode Value="urn:oasis:names:tc:SAML:2.0:status:Success"/>
+  </samlp:Status>
+  <Assertion Version="2.0" xmlns="urn:oasis:names:tc:SAML:2.0:assertion">
+    <Issuer></Issuer>
+    <Subject>
+      <SubjectConfirmation Method="urn:oasis:names:tc:SAML:2.0:cm:bearer"/>
+    </Subject>
+    <Conditions></Conditions>
+    <AuthnStatement>
+      <AuthnContext>
+	    <AuthnContextClassRef>
+	      urn:oasis:names:tc:SAML:2.0:ac:classes:Password
+	    </AuthnContextClassRef>
+      </AuthnContext>
+    </AuthnStatement>
+  </Assertion>
+</samlp:Response>
+"""
+
+class ResponseCreator(object):
+  user_name = None
+  response = None
+
+  def createSamlResponse(self, user_name):
+    self._setUserName(user_name)
+    response = samlp.ResponseFromString(EMPTY_SAML_RESPONSE)
+    response.id = saml2.utils.createID()
+    now = saml2.utils.getDateAndTime()
+    until = saml2.utils.getDateAndTime(int(self.config.get('idp_session_lifetime')))
+    response.issue_instant = now
+    response.assertion[0].id = saml2.utils.createID()
+    response.assertion[0].issue_instant = now
+    response.assertion[0].issuer.text = self.config.get('issuer_name')
+    response.assertion[0].conditions.not_before = now
+    response.assertion[0].conditions.not_on_or_after = until
+    response.assertion[0].authn_statement[0].authn_instant = now
+    response.assertion[0].authn_statement[0].session_not_on_or_after = until
+    response.assertion[0].subject.name_id = self._getNameID()
+    key_type = self.config.get("apps_privkey_type")
+    if key_type == "rsa":
+      alg = ds.SIG_RSA_SHA1
+    elif key_type == "dsa":
+      alg = ds.SIG_DSA_SHA1
+    else:
+      alg = ds.SIG_RSA_SHA1
+    response.signature = ds.GetEmptySignature(signature_method_algorithm=alg)
+    attribute_statement = self._getAttributeStatement()
+    if attribute_statement is not None:
+      response.assertion[0].attribute_statement.append(attribute_statement)
+    return response
+
+  def _setUserName(self, user_name):
+    self.user_name = user_name
+
+  def __init__(self, config):
+    self._prepare(config)
+
+  def _getNameID(self):
+    raise NotImplementedError('Child class must implement me.')
+
+  def _prepare(self, config):
+    raise NotImplementedError('Child class must implement me.')
+
+  def _getAttributeStatement(self):
+    return None
+
+def create(mapper, config):
+
+  exec('from gheimdall.responsecreator import %s' % mapper)
+  ret = eval('%s.cls(config)' % mapper)
+  return ret

@@ -39,7 +39,10 @@ try:
 except ImportError:
   from elementtree import ElementTree
 from turbogears import config, flash
-from gheimdall import errors, unamemapper
+from gheimdall import errors, responsecreator
+import saml2
+import xmldsig as ds
+from saml2 import saml, samlp
 import logging
 
 log = logging.getLogger("gheimdall.controllers")
@@ -79,53 +82,40 @@ def ldapEscape(source):
 def createLoginDict(SAMLRequest, RelayState, user_name):
   try:
     xml = zlib.decompress(base64.b64decode(SAMLRequest), -8)
-    saml_tree = ElementTree.fromstring(xml)
+    authn_request = samlp.AuthnRequestFromString(xml)
   except Exception, e:
     log.error(e)
     flash(_('The value of SAMLRequest is wrong'))
     raise errors.GheimdallException()
-  acsURL = saml_tree.attrib['AssertionConsumerServiceURL']
-
-  # uname mapping
-  mapper = unamemapper.createUnameMapper(
-    mapper=config.get('apps.uname_mapper'),
-    config=config)
-  google_user_name = mapper.getGoogleUsername(user_name)
+  # print authn_request.ToString()
+  acsURL = authn_request.assertion_consumer_service_url
+  issuer = authn_request.issuer.text.strip()
+  
+  # create response
+  sp_setting = config.get('apps.service_providers')
+  module_name = sp_setting.get(issuer,
+                               config.get("apps.default_response_creator", "default"))
+  response_creator = responsecreator.create(module_name, config)
 
   # create saml response
-  saml_response = createSamlResponse(google_user_name)
+  saml_response = response_creator.createSamlResponse(user_name)
 
-  signed_response = signResponse(saml_response,
-                                 config.get('apps.privkey_filename'))
+  print type(saml_response)
+
+  signed_response = saml2.utils.sign(saml_response.ToString(),
+                                     config.get('apps.privkey_filename'))
+  encoded_response = base64.encodestring(signed_response)
 
   # set session data
   # Preserve user_name in the session for changing password.
   cherrypy.session['user_name'] = user_name
-  cherrypy.session['google_user_name'] = google_user_name
   cherrypy.session['authenticated'] = True
   if RelayState.find('continue=https') >= 0:
     cherrypy.session['useSSL'] = True
 
   return dict(acsURL=acsURL,
-              SAMLResponse=signed_response,
+              SAMLResponse=encoded_response,
               RelayState=RelayState)
-
-def createSamlResponse(username):
-  xml_template_path = os.path.join(
-    os.path.dirname(__file__),
-    os.path.join('templates', 'samlResponseTemplate.xml'))
-    
-  xml_template_file = file(xml_template_path)
-  xml_template = Template(xml_template_file.read())
-  xml_template_file.close()
-
-  return xml_template.substitute(dict(USERNAME_STRING=username,
-                                      RESPONSE_ID=createID(),
-                                      ISSUE_INSTANT=getDateAndTime(),
-                                      AUTHN_INSTANT=getDateAndTime(),
-                                      NOT_BEFORE=getDateAndTime(-31536000),
-                                      NOT_ON_OR_AFTER=getDateAndTime(31536000),
-                                      ASSERTION_ID=createID()))
 
 def createID():
   ret = ""

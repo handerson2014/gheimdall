@@ -57,6 +57,8 @@ gheimdall/templates/gheimdall-logout.kid
 gheimdall/templates/gheimdall-nopasswd.kid
 gheimdall/templates/gheimdall-passwd-success.kid
 gheimdall/templates/gheimdall-passwd.kid
+gheimdall/templates/gheimdall-reset-password-do.kid
+gheimdall/templates/gheimdall-reset-password.kid
 gheimdall/templates/login.kid
 gheimdall/templates/master.kid
 gheimdall/templates/samlResponseTemplate.xml

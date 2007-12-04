@@ -35,11 +35,12 @@ try:
 except ImportError:
   from elementtree import ElementTree
 from turbogears import config, flash
-from gheimdall import errors, responsecreator
+from gheimdall import errors, responsecreator, sp
 import saml2
 import xmldsig as ds
 from saml2 import saml, samlp
 import logging
+import time
 
 log = logging.getLogger("gheimdall.controllers")
 
@@ -75,7 +76,7 @@ def ldapEscape(source):
   ret = ret.replace('\\', '\\5c')
   return ret
 
-def createLoginDict(SAMLRequest, RelayState, user_name):
+def createLoginDict(SAMLRequest, RelayState, user_name, set_time=True):
   try:
     xml = zlib.decompress(base64.b64decode(SAMLRequest), -8)
     authn_request = samlp.AuthnRequestFromString(xml)
@@ -83,29 +84,55 @@ def createLoginDict(SAMLRequest, RelayState, user_name):
     log.error(e)
     flash(_('The value of SAMLRequest is wrong'))
     raise errors.GheimdallException()
-  # print authn_request.ToString()
+  if authn_request is None:
+    log.error(e)
+    flash(_('The value of SAMLRequest is wrong'))
+    raise errors.GheimdallException()
+
   acsURL = authn_request.assertion_consumer_service_url
   issuer = authn_request.issuer.text.strip()
   
   # create response
-  sp_setting = config.get('apps.service_providers')
-  module_name = sp_setting.get(
+  creators = config.get('apps.response_creators')
+  module_name = creators.get(
     issuer, config.get("apps.default_response_creator","default"))
   response_creator = responsecreator.create(module_name, config)
 
+  if set_time:
+    login_time = time.time()
+    valid_time = login_time + config.get('idp_session_lifetime')
+  else:
+    login_time = cherrypy.session.get('login_time')
+    valid_time = cherrypy.session.get('valid_time')
+
   # create saml response
-  saml_response = response_creator.createSamlResponse(user_name)
+  saml_response = response_creator.createAuthnResponse(user_name,
+                                                       authn_request,
+                                                       valid_time)
 
   signed_response = saml2.utils.sign(saml_response.ToString(),
                                      config.get('apps.privkey_filename'))
+
   encoded_response = base64.encodestring(signed_response)
 
   # set session data
   # Preserve user_name in the session for changing password.
   cherrypy.session['user_name'] = user_name
   cherrypy.session['authenticated'] = True
+  if cherrypy.session.get('issuers', None) is None:
+    cherrypy.session['issuers'] = {}
+
+  cherrypy.session['issuers'][issuer] = sp.ServiceProvider(
+    name=issuer, status=sp.STATUS_LOGIN,
+    assertion_id=saml_response.assertion[0].id,
+    name_id=saml_response.assertion[0].subject.name_id)
+
   if RelayState.find('continue=https') >= 0:
     cherrypy.session['useSSL'] = True
+
+  if set_time:
+    cherrypy.session['login_time'] = login_time
+    cherrypy.session['valid_time'] = valid_time
 
   return dict(acsURL=acsURL, SAMLResponse=encoded_response,
               RelayState=RelayState)

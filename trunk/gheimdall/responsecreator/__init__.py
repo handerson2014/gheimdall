@@ -27,6 +27,7 @@ import saml2
 import saml2.utils
 import xmldsig as ds
 from saml2 import saml, samlp
+import time
 
 EMPTY_SAML_RESPONSE="""<?xml version="1.0" encoding="UTF-8"?>
 <samlp:Response Version="2.0"
@@ -55,13 +56,15 @@ EMPTY_SAML_RESPONSE="""<?xml version="1.0" encoding="UTF-8"?>
 class ResponseCreator(object):
   user_name = None
   response = None
+  authn_request = None
 
-  def createSamlResponse(self, user_name):
-    self._setUserName(user_name)
+  def createAuthnResponse(self, user_name, authn_request, valid_time):
+    self.user_name = user_name
+    self.authn_request = authn_request
     response = samlp.ResponseFromString(EMPTY_SAML_RESPONSE)
     response.id = saml2.utils.createID()
-    now = saml2.utils.getDateAndTime()
-    until = saml2.utils.getDateAndTime(int(self.config.get('idp_session_lifetime')))
+    now = saml2.utils.getDateAndTime(time.time())
+    until = saml2.utils.getDateAndTime(valid_time)
     response.issue_instant = now
     response.assertion[0].id = saml2.utils.createID()
     response.assertion[0].issue_instant = now
@@ -79,13 +82,8 @@ class ResponseCreator(object):
     else:
       alg = ds.SIG_RSA_SHA1
     response.signature = ds.GetEmptySignature(signature_method_algorithm=alg)
-    attribute_statement = self._getAttributeStatement()
-    if attribute_statement is not None:
-      response.assertion[0].attribute_statement.append(attribute_statement)
+    self._adjustment()
     return response
-
-  def _setUserName(self, user_name):
-    self.user_name = user_name
 
   def __init__(self, config):
     self._prepare(config)
@@ -96,7 +94,7 @@ class ResponseCreator(object):
   def _prepare(self, config):
     raise NotImplementedError('Child class must implement me.')
 
-  def _getAttributeStatement(self):
+  def _adjustment(self):
     return None
 
 def create(mapper, config):

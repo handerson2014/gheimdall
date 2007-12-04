@@ -30,7 +30,7 @@ import StringIO
 import traceback
 import cherrypy
 # from model import *
-import logging
+import logging, time
 from gheimdall import utils, errors, widgets, auth, passwd
 try:
   import turbomail
@@ -239,8 +239,8 @@ class Root(ErrorCatcher):
     cherrypy.session['authenticated'] = False
     cherrypy.session['user_name'] = None
     cherrypy.session['useSSL'] = False
-    cherrypy.session['google_user_name'] = None
-    cherrypy.response.headers['Cache-Control']
+    cherrypy.session['login_time'] = 0
+    cherrypy.session['valid_time'] = 0
     return dict(url=url)
 
   @expose(template="gheimdall.templates.gheimdall-login")
@@ -263,11 +263,16 @@ class Root(ErrorCatcher):
     remember_me = cherrypy.session.get('remember_me', False)
     authenticated = cherrypy.session.get('authenticated', False)
     if remember_me and authenticated:
-      ret = utils.createLoginDict(SAMLRequest, RelayState,
-                                  cherrypy.session.get('user_name'))
-      ret['tg_template'] = 'gheimdall.templates.gheimdall-login-success'
-      return ret
-      
+      login_time = cherrypy.session.get('login_time', 0)
+      valid_time = cherrypy.session.get('valid_time', 0)
+      now = time.time()
+      if login_time < now and now < valid_time:
+        ret = utils.createLoginDict(SAMLRequest, RelayState,
+                                    cherrypy.session.get('user_name'),
+                                    set_time=False)
+        ret['tg_template'] = 'gheimdall.templates.gheimdall-login-success'
+        return ret
+
     tg_exception = kw.get('tg_exceptions', None)
     if tg_exception is not None:
       log.error(tg_exception)
@@ -276,8 +281,9 @@ class Root(ErrorCatcher):
 
   @expose(template="gheimdall.templates.gheimdall-login-success")
   @error_handler(login)
-  @exception_handler(login,
-                     rules="isinstance(tg_exceptions,errors.GheimdallException)")
+  @exception_handler(
+    login,
+    rules="isinstance(tg_exceptions,errors.GheimdallException)")
   @validate(form=login_form_widget)
   @strongly_expire
   def login_do(self, SAMLRequest, RelayState, user_name, password,
@@ -290,7 +296,7 @@ class Root(ErrorCatcher):
 
     # authentication
     auth_engine = auth.createAuthEngine(engine=config.get('apps.auth_engine'),
-                                    config=config)
+                                        config=config)
     try:
       auth_engine.authenticate(user_name, password)
     except auth.AuthException, e:
@@ -346,12 +352,16 @@ class Root(ErrorCatcher):
     if user_name is None:
       # There must be an user_name in the session.
       user_name = cherrypy.session.get('user_name')
-      useSSL = cherrypy.session.get('useSSL', False)
-      if useSSL:
-        scheme = 'https'
-      else:
-        scheme = 'http'
-      backURL = scheme + '://mail.google.com/a/%s/' % config.get('apps.domain')
+      backURL = cherrypy.request.headers.get('Referer', '')
+      if backURL == '':
+        # fallback to google. Is it OK?
+        useSSL = cherrypy.session.get('useSSL', False)
+        if useSSL:
+          scheme = 'https'
+        else:
+          scheme = 'http'
+        backURL = scheme + '://mail.google.com/a/%s/' % config.get(
+          'apps.domain')
       
     if user_name is None:
       raise errors.GheimdallException('Can not retrieve user name.')

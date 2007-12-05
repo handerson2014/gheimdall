@@ -82,8 +82,9 @@ class ResponseCreator(object):
     else:
       alg = ds.SIG_RSA_SHA1
     response.signature = ds.GetEmptySignature(signature_method_algorithm=alg)
+    self.response = response
     self._adjustment()
-    return response
+    return self.response
 
   def __init__(self, config):
     self._prepare(config)

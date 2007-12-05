@@ -76,7 +76,7 @@ class LoginFormWidget(widgets.TableForm):
       validator=validators.UnicodeString(not_empty=True))
     RelayState = widgets.HiddenField(
       'RelayState',
-      validator=validators.UnicodeString(not_empty=True))
+      validator=validators.UnicodeString())
     user_name = widgets.TextField(
       'user_name', label=_('User Name:'), attrs=dict(size=16),
       validator=validators.UnicodeString(

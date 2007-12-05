@@ -245,7 +245,7 @@ class Root(ErrorCatcher):
 
   @expose(template="gheimdall.templates.gheimdall-login")
   @strongly_expire
-  def login(self, SAMLRequest, RelayState, *args, **kw):
+  def login(self, SAMLRequest, RelayState='', *args, **kw):
     if config.get('apps.use_header_auth'):
       # header auth
       # retrieve user name from header

@@ -286,8 +286,7 @@ class Root(ErrorCatcher):
     rules="isinstance(tg_exceptions,errors.GheimdallException)")
   @validate(form=login_form_widget)
   @strongly_expire
-  def login_do(self, SAMLRequest, RelayState, user_name, password,
-               **kw):
+  def login_do(self, SAMLRequest, RelayState, user_name, password, **kw):
     cherrypy.session['remember_me'] = kw.get('remember_me', False)
     if config.get('apps.use_header_auth', False):
       raise errors.GheimdallException(

@@ -7,17 +7,8 @@
     <meta content="text/html; charset=UTF-8" http-equiv="content-type" py:replace="''"/>
     <title py:replace="''">Your title goes here</title>
     <meta py:replace="item[:]"/>
-    <style type="text/css">
-        #pageLogin
-        {
-            font-size: 10px;
-            font-family: verdana;
-            text-align: right;
-        }
-    </style>
-    <style type="text/css" media="screen">
-@import "${tg.url('/static/css/style.css')}";
-</style>
+    <link href="${tg.url('/static/css/style.css')}"
+          rel="stylesheet" type="text/css" media="screen" />
 </head>
 
 <body py:match="item.tag=='{http://www.w3.org/1999/xhtml}body'" py:attrs="item.items()">

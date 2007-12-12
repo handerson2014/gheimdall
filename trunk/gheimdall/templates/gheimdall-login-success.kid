@@ -11,10 +11,10 @@
   <font size="+1">Please wait a second...</font>
   <form name="acsForm" py:attrs="action=acsURL" method="post">
     <div style="display: none">
-      <textarea rows="10" cols="80" name="SAMLResponse">${SAMLResponse}</textarea>
-      <textarea rows="10" cols="80" name="RelayState" py:content="RelayState"></textarea>
-    </div>
+      <input type="hidden" name="SAMLResponse" py:attrs="value=SAMLResponse" />
+      <input type="hidden" name="RelayState" py:attrs="value=RelayState" />
     <input type="submit" py:attrs="value=_('Login')"/>
+    </div>
   </form>
 </body>
 </html>

@@ -58,12 +58,24 @@ class ResponseCreator(object):
   response = None
   authn_request = None
 
+  def createLogoutResponse(self, logout_request_id, status_code):
+    now = saml2.utils.getDateAndTime(time.time())    
+    self.response = samlp.LogoutResponse(id=saml2.utils.createID(),
+                                         version=saml2.V2,
+                                         issue_instant=now,
+                                         in_response_to=logout_request_id)
+    self.response.issuer = saml.Issuer(text=self.config.get('issuer_name'))
+    self.response.status = samlp.Status()
+    self.response.status.status_code = samlp.StatusCode(status_code)
+    self._add_signature()
+    return self.response
+
   def createAuthnResponse(self, user_name, authn_request, valid_time):
     self.user_name = user_name
     self.authn_request = authn_request
     response = samlp.ResponseFromString(EMPTY_SAML_RESPONSE)
     response.id = saml2.utils.createID()
-    now = saml2.utils.getDateAndTime(time.time())
+    now = saml2.utils.getDateAndTime(time.time() - 10)
     until = saml2.utils.getDateAndTime(valid_time)
     response.issue_instant = now
     response.assertion[0].id = saml2.utils.createID()
@@ -74,6 +86,12 @@ class ResponseCreator(object):
     response.assertion[0].authn_statement[0].authn_instant = now
     response.assertion[0].authn_statement[0].session_not_on_or_after = until
     response.assertion[0].subject.name_id = self._getNameID()
+    self.response = response
+    self._add_signature()
+    self._adjustment()
+    return self.response
+
+  def _add_signature(self):
     key_type = self.config.get("apps_privkey_type")
     if key_type == "rsa":
       alg = ds.SIG_RSA_SHA1
@@ -81,10 +99,8 @@ class ResponseCreator(object):
       alg = ds.SIG_DSA_SHA1
     else:
       alg = ds.SIG_RSA_SHA1
-    response.signature = ds.GetEmptySignature(signature_method_algorithm=alg)
-    self.response = response
-    self._adjustment()
-    return self.response
+    self.response.signature = ds.GetEmptySignature(
+      signature_method_algorithm=alg)
 
   def __init__(self, config):
     self._prepare(config)

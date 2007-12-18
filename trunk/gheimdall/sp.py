@@ -25,8 +25,9 @@ __author__ = 'tmatsuo@sios.com (Takashi MATSUO)'
 
 STATUS_NONE = None
 STATUS_LOGIN = 1
-STATUS_LOGOUT_SUCCESS = 2
-STATUS_LOGOUT_FAIL = 4
+STATUS_LOGOUT_START = 2
+STATUS_LOGOUT_SUCCESS = 4
+STATUS_LOGOUT_FAIL = 8
 
 class ServiceProvider(object):
 
@@ -34,9 +35,11 @@ class ServiceProvider(object):
   status = STATUS_NONE
   assertion_id = None
   name_id = None
+  logout_status = None
 
-  def __init__(self, name, status, assertion_id, name_id):
+  def __init__(self, name, status, assertion_id, name_id, logout_status=None):
     self.name = name
     self.status = status
     self.assertion_id = assertion_id
     self.name_id = name_id
+    self.logout_status = None

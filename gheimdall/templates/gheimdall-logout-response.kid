@@ -5,16 +5,16 @@
 <head>
   <meta content="text/html; charset=UTF-8"
         http-equiv="content-type" py:replace="''"/>
-  <title>Logging in...</title>
+  <title>Logging out...</title>
 </head>
-<body onLoad="javascript:document.acsForm.submit()">
+<body onLoad="javascript:document.logoutForm.submit()">
   <font size="+1">Please wait a second...</font>
-  <form name="acsForm" py:attrs="action=acsURL" method="post">
+  <form name="logoutForm" py:attrs="action=logoutURL" method="post">
     <div style="display: none">
       <input type="hidden" name="SAMLResponse" py:attrs="value=SAMLResponse" />
       <input type="hidden" name="RelayState" py:attrs="value=RelayState" />
     </div>
-    <input type="submit" py:attrs="value=_('Login')"/>
+    <input type="submit" py:attrs="value=_('Logout')"/>
   </form>
 </body>
 </html>

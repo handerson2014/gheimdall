@@ -76,6 +76,19 @@ def ldapEscape(source):
   ret = ret.replace('\\', '\\5c')
   return ret
 
+def createLogoutResponse(RelayState, issuer_name, req_id, status_code):
+  response_creator = responsecreator.create("default", config)
+  logout_response = response_creator.createLogoutResponse(
+    req_id, status_code)
+  signed_response = saml2.utils.sign(logout_response.ToString(),
+                                     config.get('apps.privkey_filename'))
+  logoutURL = config.get("logout_response_urls").get(issuer_name)
+  ret = {"SAMLResponse": base64.b64encode(signed_response),
+         "RelayState": RelayState,
+         "logoutURL": logoutURL,
+         "tg_template":  'gheimdall.templates.gheimdall-logout-response'}
+  return ret
+
 def createLoginDict(SAMLRequest, RelayState, user_name, set_time=True):
   try:
     xml = zlib.decompress(base64.b64decode(SAMLRequest), -8)

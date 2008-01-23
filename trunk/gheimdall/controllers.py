@@ -241,7 +241,6 @@ class Root(ErrorCatcher):
         decoded_request = base64.b64decode(SAMLRequest)
         logout_request = samlp.LogoutRequestFromString(decoded_request)
         if logout_request is None:
-          issuer_name = "Unknown"
           raise errors.GheimdallException('The value of SAMLRequest is wrong.')
         issuer_name = logout_request.issuer.text.strip()
         key_file = config.get('apps.public_keys').get(issuer_name, None)
@@ -278,57 +277,75 @@ class Root(ErrorCatcher):
         cherrypy.session['logout_request_id'] = logout_request.id
         # goto LOOP for SP
 
-      except Exception, e:
+      except errors.GheimdallException, e:
         log.error(e)
         return utils.createLogoutResponse(
           RelayState, issuer_name, logout_request.id, samlp.STATUS_RESPONDER)
 
     elif SAMLResponse is not None:
       # A service provider has sent logout response.
-      # TODO: renew session
-      decoded_response = base64.b64decode(SAMLResponse)
-      pass
+      try:
+        decoded_response = base64.b64decode(SAMLResponse)
+        logout_response = samlp.LogoutResponseFromString(decoded_response)
+        if logout_response is None:
+          issuer_name = "Unknown"
+          raise errors.GheimdallException('The value of SAMLRequest is wrong.')
+        issuer_name = logout_response.issuer.text.strip()
+        if issuer_name == "":
+          raise errors.GheimdallException('Can not get the issuer name.')
 
+        key_file = config.get('apps.public_keys').get(issuer_name, None)
+        if key_file is None:
+          raise errors.GheimdallException('Failed to get public key filename.'
+                                          ' issuer: %s' % issuer_name)
+        result = samlutils.verify(decoded_response, key_file)
+        if result == False:
+          raise errors.GheimdallException('Failed verifyng the signature'
+                                          ' of logout response.')
+        if cherrypy.session['issuers'][issuer_name].status != \
+             sp.STATUS_LOGOUT_START:
+          raise errors.GheimdallException('Request from invalid issuer.')
+      except errors.GheimdallException, e:
+        log.error(e)
+      else:
+        # renew session
+        if logout_response.status.status_code.value == samlp.STATUS_SUCCESS:
+          cherrypy.session['issuers'][issuer_name].status = \
+                                                  sp.STATUS_LOGOUT_SUCCESS
+        else:
+          cherrypy.session['issuers'][issuer_name].status = \
+                                                  sp.STATUS_LOGOUT_FAIL
+          
     # TODO: google specific treatment
         
     # LOOP for SP
+    any_failed = False
     for key, issuer in cherrypy.session['issuers'].iteritems():
       if key == "google.com":
         # TODO: google specific treatment
+        any_failed = True
         continue
       if issuer.status == sp.STATUS_LOGIN:
-        # TODO: send logout request
-        now = saml2.utils.getDateAndTime(time.time())
-        req = samlp.LogoutRequest(id=saml2.utils.createID(),
-                                  version=saml2.V2,
-                                  issue_instant=now)
-        req.issuer=saml.Issuer(text=config.get('issuer_name'))
-        req.name_id = issuer.name_id
-        req.session_index = samlp.SessionIndex(text=issuer.assertion_id)
-        key_type = config.get("apps_privkey_type")
-        if key_type == "rsa":
-          alg = ds.SIG_RSA_SHA1
-        elif key_type == "dsa":
-          alg = ds.SIG_DSA_SHA1
-        else:
-          alg = ds.SIG_RSA_SHA1
-        req.signature = ds.GetEmptySignature(signature_method_algorithm=alg)
-        signed_request = saml2.utils.sign(req.ToString(),
-                                          config.get('apps.privkey_filename'))
-        logoutURL = config.get("logout_request_urls").get(issuer.name)
         cherrypy.session['issuers'][issuer.name].status = \
                                                         sp.STATUS_LOGOUT_START
-        ret = {"SAMLRequest": base64.b64encode(signed_request),
-               "RelayState": RelayState,
-               "logoutURL": logoutURL,
-               "tg_template":  'gheimdall.templates.gheimdall-logout-request'}
-        return ret
+        return utils.createLogoutRequest(RelayState,
+                                         issuer.name,
+                                         issuer.assertion_id,
+                                         issuer.name_id)
+      
+      elif issuer.status == sp.STATUS_LOGOUT_START or\
+           issuer.status == sp.STATUS_LOGOUT_FAIL:
+        any_failed = True
 
     # send logout response to issuer_origin
+    if any_failed:
+      status_to_send = samlp.STATUS_PARTIAL_LOGOUT
+    else:
+      status_to_send = samlp.STATUS_SUCCESS
     return utils.createLogoutResponse(RelayState,
                                       cherrypy.session['issuer_origin'],
                                       cherrypy.session['logout_request_id'],
-                                      samlp.STATUS_SUCCESS)
+                                      status_to_send)
 
   @expose(template="gheimdall.templates.gheimdall-login")
   @strongly_expire

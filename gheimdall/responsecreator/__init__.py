@@ -56,7 +56,19 @@ EMPTY_SAML_RESPONSE="""<?xml version="1.0" encoding="UTF-8"?>
 class ResponseCreator(object):
   user_name = None
   response = None
+  request = None
   authn_request = None
+
+  def createLogoutRequest(self, session_index, name_id):
+    now = saml2.utils.getDateAndTime(time.time())
+    req = samlp.LogoutRequest(id=saml2.utils.createID(),
+                              version=saml2.V2,
+                              issue_instant=now)
+    req.issuer=saml.Issuer(text=self.config.get('issuer_name'))
+    req.name_id = name_id
+    req.session_index = samlp.SessionIndex(text=session_index)
+    req.signature = self._get_signature()
+    return req
 
   def createLogoutResponse(self, logout_request_id, status_code):
     now = saml2.utils.getDateAndTime(time.time())    
@@ -67,7 +79,7 @@ class ResponseCreator(object):
     self.response.issuer = saml.Issuer(text=self.config.get('issuer_name'))
     self.response.status = samlp.Status()
     self.response.status.status_code = samlp.StatusCode(status_code)
-    self._add_signature()
+    self.response.signature = self._get_signature()
     return self.response
 
   def createAuthnResponse(self, user_name, authn_request, valid_time):
@@ -87,11 +99,11 @@ class ResponseCreator(object):
     response.assertion[0].authn_statement[0].session_not_on_or_after = until
     response.assertion[0].subject.name_id = self._getNameID()
     self.response = response
-    self._add_signature()
+    self.response.signature = self._get_signature()
     self._adjustment()
     return self.response
 
-  def _add_signature(self):
+  def _get_signature(self):
     key_type = self.config.get("apps_privkey_type")
     if key_type == "rsa":
       alg = ds.SIG_RSA_SHA1
@@ -99,8 +111,7 @@ class ResponseCreator(object):
       alg = ds.SIG_DSA_SHA1
     else:
       alg = ds.SIG_RSA_SHA1
-    self.response.signature = ds.GetEmptySignature(
-      signature_method_algorithm=alg)
+    return ds.GetEmptySignature(signature_method_algorithm=alg)
 
   def __init__(self, config):
     self._prepare(config)

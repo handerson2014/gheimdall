@@ -76,6 +76,20 @@ def ldapEscape(source):
   ret = ret.replace('\\', '\\5c')
   return ret
 
+# def getLogoutService(binding, 
+
+def createLogoutRequest(RelayState, issuer_name, session_index, name_id):
+  response_creator = responsecreator.create("default", config)
+  logout_request = response_creator.createLogoutRequest(session_index, name_id)
+  signed_request = saml2.utils.sign(logout_request.ToString(),
+                                     config.get('apps.privkey_filename'))
+  logoutURL = config.get("logout_request_urls").get(issuer_name)
+  ret = {"SAMLRequest": base64.b64encode(signed_request),
+         "RelayState": RelayState,
+         "logoutURL": logoutURL,
+         "tg_template":  'gheimdall.templates.gheimdall-logout-request'}
+  return ret
+
 def createLogoutResponse(RelayState, issuer_name, req_id, status_code):
   response_creator = responsecreator.create("default", config)
   logout_response = response_creator.createLogoutResponse(
@@ -91,7 +105,10 @@ def createLogoutResponse(RelayState, issuer_name, req_id, status_code):
 
 def createLoginDict(SAMLRequest, RelayState, user_name, set_time=True):
   try:
-    xml = zlib.decompress(base64.b64decode(SAMLRequest), -8)
+    try:
+      xml = zlib.decompress(base64.b64decode(SAMLRequest), -8)
+    except:
+      xml = zlib.decompress(base64.b64decode(SAMLRequest))
     authn_request = samlp.AuthnRequestFromString(xml)
   except Exception, e:
     log.error(e)

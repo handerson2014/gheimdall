@@ -256,6 +256,9 @@ class Root(ErrorCatcher):
         if issuer_in_ses is None:
           raise errors.GheimdallException('Request from invalid issuer.')
 
+        if logout_request.name_id.text is None:
+          raise errors.GheimdallException('Request with empty NameID.')
+
         if issuer_in_ses.name_id.text.strip() != \
              logout_request.name_id.text.strip():
           raise errors.GheimdallException('Request with invalid NameID.')

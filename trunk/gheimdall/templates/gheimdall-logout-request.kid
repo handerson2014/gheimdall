@@ -7,10 +7,7 @@
         http-equiv="content-type" py:replace="''"/>
   <title>Logging out...</title>
 </head>
-<!--
 <body onLoad="javascript:document.logoutForm.submit()">
--->
-<body>
   <font size="+1">Please wait a second...</font>
   <form name="logoutForm" py:attrs="action=logoutURL" method="post">
     <div style="display: none">

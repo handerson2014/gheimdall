@@ -252,7 +252,12 @@ class Root(ErrorCatcher):
         if result == False:
           raise errors.GheimdallException('Failed verifyng the signature'
                                           ' of logout request.')
-        issuer_in_ses = cherrypy.session['issuers'].get(issuer_name, None)
+        try:
+          issuer_in_ses = cherrypy.session['issuers'].get(issuer_name, None)
+        except KeyError:
+          raise errors.GheimdallException(
+            'The session has no issuer attribute.')
+          
         if issuer_in_ses is None:
           raise errors.GheimdallException('Request from invalid issuer.')
 

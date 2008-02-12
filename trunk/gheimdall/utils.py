@@ -129,16 +129,17 @@ def createLoginDict(SAMLRequest, RelayState, user_name, set_time=True):
   response_creator = responsecreator.create(module_name, config)
 
   if set_time:
-    login_time = time.time()
-    valid_time = login_time + config.get('idp_session_lifetime')
+    auth_time = time.time()
+    valid_time = auth_time + config.get('idp_session_lifetime')
   else:
-    login_time = cherrypy.session.get('login_time')
+    auth_time = cherrypy.session.get('auth_time')
     valid_time = cherrypy.session.get('valid_time')
 
   # create saml response
   saml_response = response_creator.createAuthnResponse(user_name,
                                                        authn_request,
-                                                       valid_time)
+                                                       valid_time,
+                                                       auth_time)
 
   signed_response = saml2.utils.sign(saml_response.ToString(),
                                      config.get('apps.privkey_filename'))
@@ -161,7 +162,7 @@ def createLoginDict(SAMLRequest, RelayState, user_name, set_time=True):
     cherrypy.session['useSSL'] = True
 
   if set_time:
-    cherrypy.session['login_time'] = login_time
+    cherrypy.session['auth_time'] = auth_time
     cherrypy.session['valid_time'] = valid_time
 
   return dict(acsURL=acsURL, SAMLResponse=encoded_response,

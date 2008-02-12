@@ -277,7 +277,7 @@ class Root(ErrorCatcher):
         cherrypy.session['authenticated'] = False
         cherrypy.session['user_name'] = None
         cherrypy.session['useSSL'] = False
-        cherrypy.session['login_time'] = 0
+        cherrypy.session['auth_time'] = 0
         cherrypy.session['valid_time'] = 0
         # save state
         cherrypy.session['logout_start'] = True
@@ -375,10 +375,10 @@ class Root(ErrorCatcher):
     remember_me = cherrypy.session.get('remember_me', False)
     authenticated = cherrypy.session.get('authenticated', False)
     if remember_me and authenticated:
-      login_time = cherrypy.session.get('login_time', 0)
+      auth_time = cherrypy.session.get('auth_time', 0)
       valid_time = cherrypy.session.get('valid_time', 0)
       now = time.time()
-      if login_time < now and now < valid_time:
+      if auth_time < now and now < valid_time:
         ret = utils.createLoginDict(SAMLRequest, RelayState,
                                     cherrypy.session.get('user_name'),
                                     set_time=False)

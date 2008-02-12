@@ -82,7 +82,8 @@ class ResponseCreator(object):
     self.response.signature = self._get_signature()
     return self.response
 
-  def createAuthnResponse(self, user_name, authn_request, valid_time):
+  def createAuthnResponse(self, user_name, authn_request, valid_time,
+                          auth_time):
     self.user_name = user_name
     self.authn_request = authn_request
     response = samlp.ResponseFromString(EMPTY_SAML_RESPONSE)
@@ -95,7 +96,7 @@ class ResponseCreator(object):
     response.assertion[0].issuer.text = self.config.get('issuer_name')
     response.assertion[0].conditions.not_before = now
     response.assertion[0].conditions.not_on_or_after = until
-    response.assertion[0].authn_statement[0].authn_instant = now
+    response.assertion[0].authn_statement[0].authn_instant = auth_time
     response.assertion[0].authn_statement[0].session_not_on_or_after = until
     response.assertion[0].subject.name_id = self._getNameID()
     self.response = response

@@ -90,13 +90,14 @@ class ResponseCreator(object):
     response.id = saml2.utils.createID()
     now = saml2.utils.getDateAndTime(time.time() - 10)
     until = saml2.utils.getDateAndTime(valid_time)
+    auth_timestamp = saml2.utils.getDateAndTime(auth_time)
     response.issue_instant = now
     response.assertion[0].id = saml2.utils.createID()
     response.assertion[0].issue_instant = now
     response.assertion[0].issuer.text = self.config.get('issuer_name')
     response.assertion[0].conditions.not_before = now
     response.assertion[0].conditions.not_on_or_after = until
-    response.assertion[0].authn_statement[0].authn_instant = auth_time
+    response.assertion[0].authn_statement[0].authn_instant = auth_timestamp
     response.assertion[0].authn_statement[0].session_not_on_or_after = until
     response.assertion[0].subject.name_id = self._getNameID()
     self.response = response

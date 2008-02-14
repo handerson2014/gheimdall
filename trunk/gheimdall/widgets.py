@@ -78,7 +78,7 @@ class LoginFormWidget(widgets.TableForm):
       'RelayState',
       validator=validators.UnicodeString())
     user_name = widgets.TextField(
-      'user_name', label=_('User Name:'), attrs=dict(size=16),
+      'user_name', label=_('User Name:'), attrs=dict(size=32),
       validator=validators.UnicodeString(
       not_empty=True,
       messages = {

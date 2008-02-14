@@ -399,7 +399,8 @@ class Root(ErrorCatcher):
   @validate(form=login_form_widget)
   @strongly_expire
   def login_do(self, SAMLRequest, RelayState, user_name, password, **kw):
-    cherrypy.session['remember_me'] = kw.get('remember_me', False)
+    cherrypy.session['remember_me'] = config.get(
+      'always_remember_me', False) or kw.get('remember_me', False)
     if config.get('apps.use_header_auth', False):
       raise errors.GheimdallException(
         'You can not use this method when ' +

@@ -23,7 +23,7 @@
 
 __author__ = 'tmatsuo@sios.com (Takashi MATSUO)'
 
-from turbogears import widgets, validators, url
+from turbogears import widgets, validators, url, config
 import formencode
 
 class PasswdSchema(formencode.Schema):
@@ -95,13 +95,20 @@ class LoginFormWidget(widgets.TableForm):
       'badType': _("The input must be a string (not a %(type)s: %(value)r)"),
       'noneType': _("The input must be a string (not None)"),
       }))
-    remember_me = widgets.CheckBox(
-      'remember_me', label=_('Remember me on this computer:'))
-    super(LoginFormWidget, self).__init__(
-      'login_form',
-      fields=[SAMLRequest, RelayState, user_name, password, remember_me],
-      action=url('/login.do'),
-      submit_text=_('Login'))
+    if config.get('always_remember_me', False):
+      super(LoginFormWidget, self).__init__(
+        'login_form',
+        fields=[SAMLRequest, RelayState, user_name, password],
+        action=url('/login.do'),
+        submit_text=_('Login'))
+    else:
+      remember_me = widgets.CheckBox(
+        'remember_me', label=_('Remember me on this computer:'))
+      super(LoginFormWidget, self).__init__(
+        'login_form',
+        fields=[SAMLRequest, RelayState, user_name, password, remember_me],
+        action=url('/login.do'),
+        submit_text=_('Login'))
 
 class ResetFormWidget(widgets.TableForm):
 

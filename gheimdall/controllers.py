@@ -276,11 +276,9 @@ class Root(ErrorCatcher):
         cherrypy.session['remember_me'] = False
         cherrypy.session['authenticated'] = False
         cherrypy.session['user_name'] = None
-        cherrypy.session['useSSL'] = False
         cherrypy.session['auth_time'] = 0
         cherrypy.session['valid_time'] = 0
         # save state
-        cherrypy.session['logout_start'] = True
         cherrypy.session['issuer_origin'] = issuer_name
         cherrypy.session['logout_request_id'] = logout_request.id
         # goto LOOP for SP
@@ -324,36 +322,93 @@ class Root(ErrorCatcher):
           cherrypy.session['issuers'][issuer_name].status = \
                                                   sp.STATUS_LOGOUT_FAIL
           
-    # TODO: google specific treatment
+    # google specific treatment
+    else:
+      # first check if there is google apps session
+      google_session = None
+      for key, issuer in cherrypy.session['issuers'].iteritems():
+        if key.startswith("google.com"):
+          google_session = key
+      if google_session is None:
+        log.debug("No Google Apps session")
+        raise errors.GheimdallException("There is no Google Apps session.")
+
+      if cherrypy.session['issuers'][google_session].status == \
+        sp.STATUS_LOGOUT_START:
+
+        log.debug(
+          "Assumed that logout from Google Apps was succeeded.")
+        cherrypy.session['issuers'][google_session].status = \
+         sp.STATUS_LOGOUT_SUCCESS
+
+      elif cherrypy.session['issuers'][google_session].status == \
+        sp.STATUS_LOGIN:
+
+        log.debug('Assumed this is a logout request from Google Apps.')
+        cherrypy.session['issuers'][google_session].status = \
+         sp.STATUS_LOGOUT_START
+        # delete session data
+        cherrypy.session['remember_me'] = False
+        cherrypy.session['authenticated'] = False
+        cherrypy.session['user_name'] = None
+        cherrypy.session['auth_time'] = 0
+        cherrypy.session['valid_time'] = 0
+        # save state
+        cherrypy.session['issuer_origin'] = google_session
+
+      else:
+        log.debug("No Google Apps session")
+        raise errors.GheimdallException("There is no Google Apps session.")
         
     # LOOP for SP
     any_failed = False
     for key, issuer in cherrypy.session['issuers'].iteritems():
-      if key == "google.com":
-        # TODO: google specific treatment
-        any_failed = True
-        continue
       if issuer.status == sp.STATUS_LOGIN:
         cherrypy.session['issuers'][issuer.name].status = \
                                                         sp.STATUS_LOGOUT_START
-        return utils.createLogoutRequest(RelayState,
-                                         issuer.name,
-                                         issuer.assertion_id,
-                                         issuer.name_id)
+        if key.startswith("google.com"):
+          useSSL = cherrypy.session.get('useSSL', False)
+          if useSSL:
+            scheme = 'https'
+          else:
+            scheme = 'http'
+          url = scheme + '://mail.google.com/a/' + config.get('apps.domain') + '/'
+          url += "logout"
+          return {
+            "url": url,
+            "tg_template": "gheimdall.templates.gheimdall-logout"}
+        else:
+          return utils.createLogoutRequest(RelayState,
+                                           issuer.name,
+                                           issuer.assertion_id,
+                                           issuer.name_id)
       
       elif issuer.status == sp.STATUS_LOGOUT_START or\
            issuer.status == sp.STATUS_LOGOUT_FAIL:
         any_failed = True
 
+    # sp loop end.
     # send logout response to issuer_origin
+    cherrypy.session['issuers'] = {}
     if any_failed:
       status_to_send = samlp.STATUS_PARTIAL_LOGOUT
     else:
       status_to_send = samlp.STATUS_SUCCESS
-    return utils.createLogoutResponse(RelayState,
-                                      cherrypy.session['issuer_origin'],
-                                      cherrypy.session['logout_request_id'],
-                                      status_to_send)
+    if cherrypy.session['issuer_origin'].startswith("google.com"):
+      useSSL = cherrypy.session.get('useSSL', False)
+      if useSSL:
+        scheme = 'https'
+      else:
+        scheme = 'http'
+      url = scheme + '://mail.google.com/a/' + config.get('apps.domain') + '/'
+      return {
+          "url": url,
+          "tg_template": "gheimdall.templates.gheimdall-logout"}
+    else:
+      return utils.createLogoutResponse(RelayState,
+                                        cherrypy.session['issuer_origin'],
+                                        cherrypy.session['logout_request_id'],
+                                        status_to_send)
 
   @expose(template="gheimdall.templates.gheimdall-login")
   @strongly_expire
@@ -399,8 +454,7 @@ class Root(ErrorCatcher):
   @validate(form=login_form_widget)
   @strongly_expire
   def login_do(self, SAMLRequest, RelayState, user_name, password, **kw):
-    cherrypy.session['remember_me'] = config.get(
-      'always_remember_me', False) or kw.get('remember_me', False)
+    cherrypy.session['remember_me'] = kw.get('remember_me', False)
     if config.get('apps.use_header_auth', False):
       raise errors.GheimdallException(
         'You can not use this method when ' +

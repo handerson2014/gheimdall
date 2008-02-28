@@ -43,7 +43,9 @@ Table of contents
  1.1.1. できる事
 
  Google Apps SSO認証・パスワード変更(バックエンドと Google Apps のパス
- ワードを同時に変更も可能)
+ ワードを同時に変更も可能)。また SLO サービスの機能も持っています。ただ
+ し現在のところ、GHeimdall は SLO サービス向けには HTTP-POST バインディ
+ ングしかサポートしません。
 
  1.1.2. できない事
 
@@ -248,6 +250,43 @@ mail.on
 mail.server
   説明: TurboMail を使用する場合の smtp host を設定します。
   example: 'localhost'
+
+issuer_name
+  説明: IDP としての issuer name を設定します。
+  example: https://example.com/idp
+
+idp_session_lifetime
+  説明: GHeimdall がログインセッションを保持する秒数を設定します。
+  example: 28800
+
+always_remember_me
+  説明: 「次回は入力を省略」チェックボックスを使いたくない時は、True に
+        セットします。True にすると GHeimdall はいつもユーザのログイン
+        状態を保持します。
+  example: False
+
+apps.privkey_type
+  description: 秘密鍵の形式にしたがって rsa か dsa のどちらかを設定しま
+               す。
+  example: rsa
+
+apps.default_response_creator
+  UNDOCUMENTED
+
+logout_request_urls
+  UNDOCUMENTED
+
+logout_response_urls
+  UNDOCUMENTED
+
+apps.respones_creators
+  UNDOCUMENTED
+
+apps.public_keys
+  UNDOCUMENTED
+
+apps.use_reset_passwd
+  UNDOCUMENTED
 
 2.5. Apache の設定 
 

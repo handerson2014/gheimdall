@@ -42,8 +42,10 @@ passwords for an option.
 
  1.1.1. Things which GHeimdall can do.
 
- Google Apps SSO authentication, changing users' passwords. (can
+ Google Apps SSO authentication, changing users' passwords. (Users can
  change both passwords of Google and your back end simultaneously.)
+ GHeimdall also has a capability for SLO service. Now GHeimdall
+ supports only HTTP-POST binding for SLO service.
 
  1.1.2. Things which GHeimdall can not do.
 
@@ -251,6 +253,43 @@ mail.on
 mail.server
   description: Set smtp host for error mail(when using TurboMail).
   example: 'localhost'
+
+issuer_name
+  description: Set issuer name for IDP.
+  example: https://example.com/idp
+
+idp_session_lifetime
+  description: How many seconds GHeimdall would keep users' login
+               sessions for.
+  example: 28800
+
+always_remember_me
+  description: Set to True when you don't want to use 'remember me on
+               this computer' checkbox. If set to True, GHeimdall
+               always remember user's login.
+  example: False
+
+apps.privkey_type
+  description: Set rsa/dsa according to the type of the private key.
+  example: rsa
+
+apps.default_response_creator
+  UNDOCUMENTED
+
+logout_request_urls
+  UNDOCUMENTED
+
+logout_response_urls
+  UNDOCUMENTED
+
+apps.respones_creators
+  UNDOCUMENTED
+
+apps.public_keys
+  UNDOCUMENTED
+
+apps.use_reset_passwd
+  UNDOCUMENTED
 
 2.5. Apache settings
 

@@ -274,22 +274,39 @@ apps.privkey_type
   example: rsa
 
 apps.default_response_creator
-  UNDOCUMENTED
+  description: Set response creator classname. If you don't sure,
+               leave it 'default'.
+  example: default
 
 logout_request_urls
-  UNDOCUMENTED
+  description: Set the dictionary which uses Service Provider's name
+               as its keys and the URLs of endpoints for logout
+               request as its values.
+  example: {"http://example.com/sp1": "http://example.com/sp1/logout"}
 
 logout_response_urls
-  UNDOCUMENTED
+  description: Set the dictionary which uses Service Provider's name
+               as its keys and the URLs of endpoints for logout
+               response as its values.
+  example: {"http://example.com/sp1": "http://example.com/sp1/logout"}
 
 apps.respones_creators
-  UNDOCUMENTED
+  description: Set the dictionary which uses Service Provider's name
+               as its keys and response creator's classnames as its
+               values.
+  example: {"http://example.com/sp1": "custom"}
 
 apps.public_keys
-  UNDOCUMENTED
+  description: Set the dictionary which uses Service Provider's name
+               as its keys and Service Provider's public key filenames
+               as its values.
+  example: {"http://example.com/sp1": "/etc/gheimdall/sp1.pubkey"}
 
 apps.use_reset_passwd
-  UNDOCUMENTED
+  description: Set to True when you want to use 'Reset password'
+               feature. Don't forget to set appropriate permission for
+               this URL when you use this feature.
+  example: False
 
 2.5. Apache settings
 

@@ -266,27 +266,37 @@ always_remember_me
   example: False
 
 apps.privkey_type
-  description: 秘密鍵の形式にしたがって rsa か dsa のどちらかを設定しま
-               す。
+  説明: 秘密鍵の形式にしたがって rsa か dsa のどちらかを設定します。
   example: rsa
 
 apps.default_response_creator
-  UNDOCUMENTED
+  説明: レスポンスクリエイターのクラス名を設定します。
+  example: default
 
 logout_request_urls
-  UNDOCUMENTED
+  説明: サービスプロバイダの名前をキーとし、またログアウトリクエスト用
+        のエンドポイントURL を値とする辞書を設定します。
+  example: {"http://example.com/sp1": "http://example.com/sp1/logout"}
 
 logout_response_urls
-  UNDOCUMENTED
+  説明: サービスプロバイダの名前をキーとし、またログアウトレスポンス用
+        のエンドポイントURL を値とする辞書を設定します。
+  example: {"http://example.com/sp1": "http://example.com/sp1/logout"}
 
 apps.respones_creators
-  UNDOCUMENTED
+  説明: サービスプロバイダの名前をキーとし、またレスポンスクリエイター
+        のクラス名を値とする辞書を設定します。
+  example: {"http://example.com/sp1": "custom"}
 
 apps.public_keys
-  UNDOCUMENTED
+  説明: サービスプロバイダの名前をキーとし、そのプロバイダの公開鍵のファ
+        イル名を値とする辞書を設定します。
+  example: {"http://example.com/sp1": "/etc/gheimdall/sp1.pubkey"}
 
 apps.use_reset_passwd
-  UNDOCUMENTED
+  説明: パスワードのリセット機能を使う場合は True を設定します。使う場
+        合は、その URL に適切なアクセス制限をかけてください。
+  example: False
 
 2.5. Apache の設定 
 
@@ -334,7 +344,7 @@ tcp の 8007 を listen しているか確認してください。
 
 起動スクリプトは準備中です。 
 
-3. GHeimdall の拡張 
+3. GHeimdall の拡張 (***OBSOLETE TODO: rewrite this chapter***)
 
 3.1. 共通の決まり事 
 

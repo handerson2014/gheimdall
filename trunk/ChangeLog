@@ -1,3 +1,26 @@
+2008-02-29 01:29  matsuo.takashi
+
+	* [r101] docs/gheimdall-manual-ja.txt, docs/gheimdall-manual.txt:
+	  Added dependencies.
+
+2008-02-29 01:03  matsuo.takashi
+
+	* [r99] ChangeLog:
+
+2008-02-29 01:01  matsuo.takashi
+
+	* [r98] gheimdall.egg-info/PKG-INFO:
+
+2008-02-29 01:00  matsuo.takashi
+
+	* [r97] docs/gheimdall-manual-ja.txt, docs/gheimdall-manual.txt:
+	  Just updated.
+
+2008-02-28 06:45  matsuo.takashi
+
+	* [r96] docs/gheimdall-manual-ja.txt, docs/gheimdall-manual.txt:
+	  Added descriptions about new parameters.
+
 2008-02-28 06:22  matsuo.takashi
 
 	* [r95] gheimdall/controllers.py: Added pseudo SLO service for
@@ -311,58 +334,4 @@
 
 	* [r3] AUTHORS, COPYING, INSTALL, LICENSE, NEWS, README, TODO,
 	  gheimdall/config/app.cfg, locales/ja/LC_MESSAGES:
-
-2007-07-20 03:11  matsuo.takashi
-
-	* [r2] AUTHORS, COPYING, ChangeLog, INSTALL, LICENSE, NEWS, README,
-	  TODO, dev.cfg, docs, docs/gheimdall-manual-ja.txt,
-	  docs/gheimdall-manual.txt, gheimdall, gheimdall.egg-info,
-	  gheimdall.egg-info/PKG-INFO, gheimdall.egg-info/SOURCES.txt,
-	  gheimdall.egg-info/dependency_links.txt,
-	  gheimdall.egg-info/not-zip-safe,
-	  gheimdall.egg-info/paster_plugins.txt,
-	  gheimdall.egg-info/requires.txt,
-	  gheimdall.egg-info/sqlobject.txt,
-	  gheimdall.egg-info/top_level.txt, gheimdall/__init__.py,
-	  gheimdall/auth, gheimdall/auth/__init__.py,
-	  gheimdall/auth/ldapauth.py, gheimdall/auth/pam.py,
-	  gheimdall/auth/sample.py, gheimdall/config,
-	  gheimdall/config/__init__.py, gheimdall/config/app.cfg,
-	  gheimdall/config/log.cfg, gheimdall/controllers.py,
-	  gheimdall/errors.py, gheimdall/json.py, gheimdall/model.py,
-	  gheimdall/passwd, gheimdall/passwd/__init__.py,
-	  gheimdall/passwd/ldappasswd.py, gheimdall/passwd/pam.py,
-	  gheimdall/release.py, gheimdall/sqlobject-history,
-	  gheimdall/static, gheimdall/static/css,
-	  gheimdall/static/css/style.css, gheimdall/static/images,
-	  gheimdall/static/images/favicon.ico,
-	  gheimdall/static/images/header_inner.png,
-	  gheimdall/static/images/info.png, gheimdall/static/images/ok.png,
-	  gheimdall/static/images/tg_under_the_hood.png,
-	  gheimdall/static/images/under_the_hood_blue.png,
-	  gheimdall/static/javascript, gheimdall/templates,
-	  gheimdall/templates/__init__.py, gheimdall/templates/_error.kid,
-	  gheimdall/templates/gheimdall-login-success.kid,
-	  gheimdall/templates/gheimdall-login.kid,
-	  gheimdall/templates/gheimdall-logout.kid,
-	  gheimdall/templates/gheimdall-nopasswd.kid,
-	  gheimdall/templates/gheimdall-passwd-success.kid,
-	  gheimdall/templates/gheimdall-passwd.kid,
-	  gheimdall/templates/login.kid, gheimdall/templates/master.kid,
-	  gheimdall/templates/samlResponseTemplate.xml,
-	  gheimdall/templates/unhandled_exception.kid, gheimdall/tests,
-	  gheimdall/tests/__init__.py, gheimdall/tests/test_controllers.py,
-	  gheimdall/tests/test_model.py, gheimdall/unamemapper,
-	  gheimdall/unamemapper/__init__.py, gheimdall/unamemapper/null.py,
-	  gheimdall/utils.py, gheimdall/widgets.py, locales, locales/ja,
-	  locales/ja/LC_MESSAGES, locales/ja/LC_MESSAGES/messages.po,
-	  locales/messages.pot, prod.cfg, samples,
-	  samples/apache-modproxy.sample, samples/apache-modpython.sample,
-	  samples/gheimdall_modpython.py, samples/modpython_gateway.py,
-	  samples/pam.sample, setup.py, start-gheimdall.py, test.cfg:
-	  GHeimdall initial import
-
-2007-07-20 02:56  
-
-	* [r1] branches, tags, .: Initial directory structure.
 

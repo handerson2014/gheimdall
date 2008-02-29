@@ -102,6 +102,8 @@ GHeimdall の動作に必要なソフトウェアです。別途インストー�
      http://code.google.com/p/gdata-python-client/
   6) python-ldap
      http://python-ldap.sourceforge.net/
+  7) python-saml2
+     http://code.google.com/p/python-saml2/
 
 *1 PyPAM-0.5.0 は double free で落ちる事があります。現在修正版を弊社で
    テスト中です。もし実験的なパッチを使いたいという場合は、

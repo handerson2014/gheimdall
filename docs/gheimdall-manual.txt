@@ -105,6 +105,8 @@ gheimdall. Please install these software.
      http://code.google.com/p/gdata-python-client/
   6) python-ldap
      http://python-ldap.sourceforge.net/
+  7) python-saml2
+     http://code.google.com/p/python-saml2/
 
 *1 PyPAM-0.5.0 has a known problem. It sometimes dies for double
    free. Now we are testing a patch. If you want to use this

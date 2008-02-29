@@ -14,8 +14,9 @@ First, please remember that roadmap is just a roadmap :)
   * 0.9.3
     * ElementTree based SAMLRequest and SAMLResponse
     * formally support plural service providers
-    * support for more bindings
-    will be released at the end of Feb 2008.
+    * Implemented Single Logout Service.
+    had released on February 27th 2008.
   * 1.0.0
+    * support for more bindings
     * SAML2.0 based fully implemented ID provider.( What? Really? )
     will be released someday.

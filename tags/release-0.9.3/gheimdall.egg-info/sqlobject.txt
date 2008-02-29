@@ -1,0 +1,2 @@
+db_module=gheimdall.model
+history_dir=$base/gheimdall/sqlobject-history

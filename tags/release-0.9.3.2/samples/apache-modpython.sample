@@ -1,0 +1,15 @@
+# put this file to /etc/httpd/conf.d/gheimdall.conf
+<Location /gheimdall>
+    SetHandler python-program
+    PythonHandler modpython_gateway::handler
+    PythonOption wsgi.application cherrypy._cpwsgi::wsgiApp
+    PythonFixupHandler gheimdall_modpython
+    PythonPath sys.path+['/etc/gheimdall']
+    PythonDebug on
+</Location>
+
+<Location /gheimdall/manage*>
+    Order deny,allow
+    deny from All
+    allow from 127.0.0.1
+</Location>

@@ -486,6 +486,7 @@ class Root(ErrorCatcher):
                                 RelayState=RelayState))
       # Failed.
       flash(_('Can not login'))
+      time.sleep(config.get('apps.sleep_time', 3))
       raise errors.GheimdallException(e.reason)
 
     return utils.createLoginDict(SAMLRequest, RelayState, user_name)
@@ -565,6 +566,7 @@ class Root(ErrorCatcher):
     except passwd.PasswdException, e:
       # changing password failed
       flash(_('Failed to change password'))
+      time.sleep(config.get('apps.sleep_time', 3))
       raise errors.GheimdallException(e.reason)
 
     if SAMLRequest != "":

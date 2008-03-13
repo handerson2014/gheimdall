@@ -1,0 +1,18 @@
+<Location /gheimdall>
+## uncomment bellow 5 lines if you use ssl client auth
+#    SSLRequireSSL true
+#    SSLVerifyClient require
+#    SSLVerifyDepth  1
+#    SSLOptions +StdEnvVars
+#    RequestHeader set SSL_CLIENT_S_DN_CN %{SSL_CLIENT_S_DN_CN}s
+    Order allow,deny
+    allow from all
+    ProxyPass http://localhost:8007/gheimdall
+    ProxyPassReverse http://localhost:8007/gheimdall
+</Location>
+
+<Location /gheimdall/manage*>
+    Order deny,allow
+    deny from All
+    allow from 127.0.0.1
+</Location>

@@ -231,10 +231,19 @@ class ErrorCatcher(controllers.RootController):
 
 class Root(ErrorCatcher):
 
+  @expose(template="gheimdall.templates.gheimdall-logout-fail")
+  def logout_fail(self, *args, **kw):
+    return dict()
+
   @expose(template="gheimdall.templates.gheimdall-logout")
+  @exception_handler(
+    logout_fail,
+    rules="isinstance(tg_exceptions,errors.GheimdallException)")
   @strongly_expire
   def logout(self, SAMLRequest=None, SAMLResponse=None, RelayState=""):
 
+    if cherrypy.session.get('issuers') is None:
+      cherrypy.session['issuers'] = {}
     if SAMLRequest is not None:
       # A service provider has sent logout request.
       try:

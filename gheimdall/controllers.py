@@ -233,6 +233,9 @@ class Root(ErrorCatcher):
 
   @expose(template="gheimdall.templates.gheimdall-logout-fail")
   def logout_fail(self, *args, **kw):
+    tg_exception = kw.get('tg_exceptions', None)
+    if tg_exception is not None:
+      log.error(tg_exception)
     return dict()
 
   @expose(template="gheimdall.templates.gheimdall-logout")

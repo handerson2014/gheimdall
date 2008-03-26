@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2007-11-26 14:08\n"
+"POT-Creation-Date: 2008-03-26 14:25\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -15,20 +15,20 @@ msgstr ""
 "Generated-By: pygettext.py 1.5\n"
 
 
-#: gheimdall/controllers.py:300
+#: gheimdall/controllers.py:481
 msgid "Password is expired. You need to set new password."
 msgstr ""
 
-#: gheimdall/controllers.py:316
+#: gheimdall/controllers.py:497
 msgid "Can not login"
 msgstr ""
 
-#: gheimdall/controllers.py:361 gheimdall/controllers.py:379
+#: gheimdall/controllers.py:547 gheimdall/controllers.py:565
 #: gheimdall/templates/gheimdall-nopasswd.kid:title
 msgid "Changing password is not available here"
 msgstr ""
 
-#: gheimdall/controllers.py:391
+#: gheimdall/controllers.py:577
 msgid "Failed to change password"
 msgstr ""
 
@@ -51,6 +51,8 @@ msgid "Title"
 msgstr ""
 
 #: gheimdall/templates/gheimdall-login-success.kid:font
+#: gheimdall/templates/gheimdall-logout-request.kid:font
+#: gheimdall/templates/gheimdall-logout-response.kid:font
 #: gheimdall/templates/gheimdall-logout.kid:font
 msgid "Please wait a second..."
 msgstr ""
@@ -62,8 +64,19 @@ msgstr ""
 #: gheimdall/templates/gheimdall-login.kid:h1
 #: gheimdall/templates/gheimdall-login.kid:title
 #: gheimdall/templates/login.kid:h1 gheimdall/templates/login.kid:title
-#: gheimdall/widgets.py:104
+#: gheimdall/widgets.py:135 gheimdall/widgets.py:143
 msgid "Login"
+msgstr ""
+
+#: gheimdall/templates/gheimdall-logout-fail.kid:font
+#: gheimdall/templates/gheimdall-logout-fail.kid:title
+msgid "Could not handle logout request"
+msgstr ""
+
+#: gheimdall/templates/gheimdall-logout-request.kid:title
+#: gheimdall/templates/gheimdall-logout-response.kid:title
+#: gheimdall/templates/gheimdall-logout.kid:title
+msgid "Logging out..."
 msgstr ""
 
 #: gheimdall/templates/gheimdall-logout.kid:a
@@ -72,10 +85,6 @@ msgstr ""
 
 #: gheimdall/templates/gheimdall-logout.kid:font
 msgid "Logged out"
-msgstr ""
-
-#: gheimdall/templates/gheimdall-logout.kid:title
-msgid "Logging out..."
 msgstr ""
 
 #: gheimdall/templates/gheimdall-nopasswd.kid:h1
@@ -108,12 +117,12 @@ msgstr ""
 msgid "Password was reset."
 msgstr ""
 
-#: gheimdall/templates/login.kid:label gheimdall/widgets.py:81
-#: gheimdall/widgets.py:110
+#: gheimdall/templates/login.kid:label gheimdall/widgets.py:112
+#: gheimdall/widgets.py:149
 msgid "User Name:"
 msgstr ""
 
-#: gheimdall/templates/login.kid:label gheimdall/widgets.py:90
+#: gheimdall/templates/login.kid:label gheimdall/widgets.py:122
 msgid "Password:"
 msgstr ""
 
@@ -158,7 +167,7 @@ msgid ""
 "    \"Internal Server Error\". It means we messed up."
 msgstr ""
 
-#: gheimdall/utils.py:85
+#: gheimdall/utils.py:115 gheimdall/utils.py:119
 msgid "The value of SAMLRequest is wrong"
 msgstr ""
 
@@ -182,23 +191,23 @@ msgstr ""
 msgid "Confirm:"
 msgstr ""
 
-#: gheimdall/widgets.py:85 gheimdall/widgets.py:94 gheimdall/widgets.py:114
+#: gheimdall/widgets.py:117 gheimdall/widgets.py:126 gheimdall/widgets.py:153
 msgid "Please enter a value"
 msgstr ""
 
-#: gheimdall/widgets.py:86 gheimdall/widgets.py:95 gheimdall/widgets.py:115
+#: gheimdall/widgets.py:118 gheimdall/widgets.py:127 gheimdall/widgets.py:154
 msgid "The input must be a string (not a %(type)s: %(value)r)"
 msgstr ""
 
-#: gheimdall/widgets.py:87 gheimdall/widgets.py:96 gheimdall/widgets.py:116
+#: gheimdall/widgets.py:119 gheimdall/widgets.py:128 gheimdall/widgets.py:155
 msgid "The input must be a string (not None)"
 msgstr ""
 
-#: gheimdall/widgets.py:99
+#: gheimdall/widgets.py:138
 msgid "Remember me on this computer:"
 msgstr ""
 
-#: gheimdall/widgets.py:122
+#: gheimdall/widgets.py:161
 msgid "Reset"
 msgstr ""
 

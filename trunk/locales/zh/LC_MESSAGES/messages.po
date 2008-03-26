@@ -15,11 +15,11 @@ msgstr ""
 "Generated-By: pygettext.py 1.5\n"
 
 
-#: gheimdall/controllers.py:300
+#: gheimdall/controllers.py:481
 msgid "Password is expired. You need to set new password."
 msgstr "密码已过期,请设置新密码。"
 
-#: gheimdall/controllers.py:316
+#: gheimdall/controllers.py:497
 msgid "Can not login"
 msgstr "无法登陆。"
 
@@ -27,7 +27,7 @@ msgstr "无法登陆。"
 msgid "Changing password is not available here"
 msgstr "无法变更密码。"
 
-#: gheimdall/controllers.py:391
+#: gheimdall/controllers.py:577
 msgid "Failed to change password"
 msgstr "变更密码失败"
 
@@ -55,9 +55,17 @@ msgstr "请稍等"
 msgid "Logging in..."
 msgstr "正在登陆..."
 
-#: gheimdall/widgets.py:104
+#: gheimdall/widgets.py:135 gheimdall/widgets.py:143
 msgid "Login"
 msgstr "登陆"
+
+#: gheimdall/templates/gheimdall-logout-fail.kid:title
+msgid "Could not handle logout request"
+msgstr ""
+
+#: gheimdall/templates/gheimdall-logout.kid:title
+msgid "Logging out..."
+msgstr "正在退出系统..."
 
 #: gheimdall/templates/gheimdall-logout.kid:a
 msgid "Login again"
@@ -66,10 +74,6 @@ msgstr "重新登陆"
 #: gheimdall/templates/gheimdall-logout.kid:font
 msgid "Logged out"
 msgstr "退出系统"
-
-#: gheimdall/templates/gheimdall-logout.kid:title
-msgid "Logging out..."
-msgstr "正在退出系统..."
 
 #: gheimdall/templates/gheimdall-nopasswd.kid:h1
 msgid "Not available"
@@ -95,11 +99,11 @@ msgstr "重新设定密码"
 msgid "Password was reset."
 msgstr "密码已被更改。"
 
-#: gheimdall/widgets.py:110
+#: gheimdall/widgets.py:149
 msgid "User Name:"
 msgstr "用户名:"
 
-#: gheimdall/templates/login.kid:label gheimdall/widgets.py:90
+#: gheimdall/templates/login.kid:label gheimdall/widgets.py:122
 msgid "Password:"
 msgstr "密码:"
 
@@ -142,9 +146,10 @@ msgstr "系统发生严重错误,且无法通知开发管理人员,请用E-MAIL�
 msgid ""
 "This is commonly known as an \"Error 500  \" or\n"
 "    \"Internal Server Error\". It means we messed up."
-msgstr "「Error: 500」错误发生。\n"
+msgstr ""
+"「Error: 500」错误发生。\n"
 
-#: gheimdall/utils.py:85
+#: gheimdall/utils.py:115 gheimdall/utils.py:119
 msgid "The value of SAMLRequest is wrong"
 msgstr "SAMLRequest参数错误。"
 
@@ -154,11 +159,13 @@ msgstr "确认密码输入错误"
 
 #: gheimdall/widgets.py:50
 msgid "Old password:"
-msgstr "旧密码:\n"
+msgstr ""
+"旧密码:\n"
 
 #: gheimdall/widgets.py:53
 msgid "New password:"
-msgstr "新密码:\n"
+msgstr ""
+"新密码:\n"
 
 #: gheimdall/widgets.py:58
 msgid "Input does not match our password policy"
@@ -168,24 +175,24 @@ msgstr "不符合密码设置原则。"
 msgid "Confirm:"
 msgstr "确认: "
 
-#: gheimdall/widgets.py:85 gheimdall/widgets.py:94 gheimdall/widgets.py:114
+#: gheimdall/widgets.py:117 gheimdall/widgets.py:126 gheimdall/widgets.py:153
 msgid "Please enter a value"
-msgstr "请输入    \n"
+msgstr ""
+"请输入    \n"
 
-#: gheimdall/widgets.py:86 gheimdall/widgets.py:95 gheimdall/widgets.py:115
+#: gheimdall/widgets.py:118 gheimdall/widgets.py:127 gheimdall/widgets.py:154
 msgid "The input must be a string (not a %(type)s: %(value)r)"
 msgstr "必须输入字符串 (%(type)s: %(value)r )"
 
-#: gheimdall/widgets.py:87 gheimdall/widgets.py:96 gheimdall/widgets.py:116
+#: gheimdall/widgets.py:119 gheimdall/widgets.py:128 gheimdall/widgets.py:155
 msgid "The input must be a string (not None)"
 msgstr "必须输入字符串(空白不可)"
 
-#: gheimdall/widgets.py:99
+#: gheimdall/widgets.py:138
 msgid "Remember me on this computer:"
 msgstr "记住我:"
 
-#: gheimdall/widgets.py:122
+#: gheimdall/widgets.py:161
 msgid "Reset"
 msgstr "重置"
-
 

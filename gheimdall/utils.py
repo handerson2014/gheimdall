@@ -139,7 +139,8 @@ def createLoginDict(SAMLRequest, RelayState, user_name, set_time=True):
   saml_response = response_creator.createAuthnResponse(user_name,
                                                        authn_request,
                                                        valid_time,
-                                                       auth_time)
+                                                       auth_time,
+                                                       acsURL)
 
   signed_response = saml2.utils.sign(saml_response.ToString(),
                                      config.get('apps.privkey_filename'))

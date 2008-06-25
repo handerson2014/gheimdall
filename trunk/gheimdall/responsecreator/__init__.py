@@ -39,7 +39,9 @@ EMPTY_SAML_RESPONSE="""<?xml version="1.0" encoding="UTF-8"?>
   <Assertion Version="2.0" xmlns="urn:oasis:names:tc:SAML:2.0:assertion">
     <Issuer></Issuer>
     <Subject>
-      <SubjectConfirmation Method="urn:oasis:names:tc:SAML:2.0:cm:bearer"/>
+      <SubjectConfirmation Method="urn:oasis:names:tc:SAML:2.0:cm:bearer">
+        <SubjectConfirmationData />
+      </SubjectConfirmation>
     </Subject>
     <Conditions></Conditions>
     <AuthnStatement>
@@ -83,7 +85,7 @@ class ResponseCreator(object):
     return self.response
 
   def createAuthnResponse(self, user_name, authn_request, valid_time,
-                          auth_time):
+                          auth_time, acsURL):
     self.user_name = user_name
     self.authn_request = authn_request
     response = samlp.ResponseFromString(EMPTY_SAML_RESPONSE)
@@ -100,6 +102,7 @@ class ResponseCreator(object):
     response.assertion[0].authn_statement[0].authn_instant = auth_timestamp
     response.assertion[0].authn_statement[0].session_not_on_or_after = until
     response.assertion[0].subject.name_id = self._getNameID()
+    response.assertion[0].subject.subject_confirmation[0].subject_confirmation_data.recipient = acsURL
     self.response = response
     self.response.signature = self._get_signature()
     self._adjustment()

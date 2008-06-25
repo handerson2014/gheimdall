@@ -1,3 +1,44 @@
+2008-06-25 01:52  matsuo.takashi
+
+	* [r116] gheimdall/responsecreator/__init__.py, gheimdall/utils.py:
+	  Changed the format of the SAMLResponse according to the change in
+	  Google Apps SSO service.
+
+2008-05-02 02:46  matsuo.takashi@gmail.com
+
+	* [r115] gheimdall/config/app.cfg: Changed the config file format.
+
+2008-04-29 14:23  matsuo.takashi
+
+	* [r114] gheimdall/tests/test_controllers.py, wsgi_testutil.py:
+	  Added test cases.
+
+2008-03-28 01:39  matsuo.takashi
+
+	* [r113] gheimdall/auth/external.py, gheimdall/config/app.cfg:
+	  Added external auth module.
+
+2008-03-26 06:35  matsuo.takashi
+
+	* [r112] gheimdall/controllers.py: Enabled logging in the
+	  logout_fail handler.
+
+2008-03-26 05:30  matsuo.takashi
+
+	* [r111] locales/ja/LC_MESSAGES/messages.po, locales/messages.pot,
+	  locales/zh/LC_MESSAGES/messages.po: Renewed messages.
+
+2008-03-26 05:24  matsuo.takashi
+
+	* [r110] gheimdall/controllers.py,
+	  gheimdall/templates/gheimdall-logout-fail.kid: Added new template
+	  when logout treatment irreparably failed.
+
+2008-03-13 06:12  matsuo.takashi
+
+	* [r108] gheimdall/config/app.cfg: Changed default
+	  session_filter.storage_path to /var/gheimdall.
+
 2008-03-13 02:23  matsuo.takashi
 
 	* [r105] gheimdall/config/app.cfg, gheimdall/controllers.py: By
@@ -5,18 +46,10 @@
 	  fails. If you don't want this behavior, please configure
 	  apps.sleep_time = 0 in your app.cfg.
 
-2008-02-29 01:33  matsuo.takashi
-
-	* [r102] ChangeLog:
-
 2008-02-29 01:29  matsuo.takashi
 
 	* [r101] docs/gheimdall-manual-ja.txt, docs/gheimdall-manual.txt:
 	  Added dependencies.
-
-2008-02-29 01:03  matsuo.takashi
-
-	* [r99] ChangeLog:
 
 2008-02-29 01:01  matsuo.takashi
 
@@ -165,10 +198,6 @@
 	* [r68] docs/gheimdall-manual-ja.txt, docs/gheimdall-manual.txt:
 	  Added descriptions about some configuration variables.
 
-2007-11-01 10:39  matsuo.takashi
-
-	* [r67] ChangeLog:
-
 2007-10-31 00:57  matsuo.takashi
 
 	* [r66] locales/ja/LC_MESSAGES/messages.po:
@@ -236,14 +265,6 @@
 	* [r45] gheimdall/controllers.py: Improved the behavior of changing
 	  password functionality.
 
-2007-09-04 12:37  matsuo.takashi
-
-	* [r43] ChangeLog:
-
-2007-09-04 12:36  matsuo.takashi
-
-	* [r42] ChangeLog:
-
 2007-09-04 12:33  matsuo.takashi
 
 	* [r41] gheimdall/release.py, prod.cfg: Fixed version number.
@@ -274,10 +295,6 @@
 
 	* [r35] gheimdall/static/css/style.css,
 	  gheimdall/static/images/gheimdall.png: Added Gheimdall logo.
-
-2007-08-24 04:34  matsuo.takashi
-
-	* [r32] ChangeLog: Released 0.9.2
 
 2007-08-08 07:39  matsuo.takashi
 
@@ -310,10 +327,6 @@
 
 	* [r24] gheimdall/config/app.cfg:
 
-2007-08-01 06:36  matsuo.takashi
-
-	* [r20] ChangeLog: 0.9.1
-
 2007-08-01 06:29  matsuo.takashi
 
 	* [r19] docs/gheimdall-manual-ja.txt, docs/gheimdall-manual.txt:
@@ -332,14 +345,6 @@
 2007-08-01 04:05  matsuo.takashi
 
 	* [r16] gheimdall/passwd/__init__.py:
-
-2007-07-20 03:21  matsuo.takashi
-
-	* [r5] ChangeLog:
-
-2007-07-20 03:20  matsuo.takashi
-
-	* [r4] ChangeLog:
 
 2007-07-20 03:19  matsuo.takashi
 

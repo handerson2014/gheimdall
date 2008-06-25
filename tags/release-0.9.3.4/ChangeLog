@@ -1,0 +1,353 @@
+2008-06-25 01:52  matsuo.takashi
+
+	* [r116] gheimdall/responsecreator/__init__.py, gheimdall/utils.py:
+	  Changed the format of the SAMLResponse according to the change in
+	  Google Apps SSO service.
+
+2008-05-02 02:46  matsuo.takashi@gmail.com
+
+	* [r115] gheimdall/config/app.cfg: Changed the config file format.
+
+2008-04-29 14:23  matsuo.takashi
+
+	* [r114] gheimdall/tests/test_controllers.py, wsgi_testutil.py:
+	  Added test cases.
+
+2008-03-28 01:39  matsuo.takashi
+
+	* [r113] gheimdall/auth/external.py, gheimdall/config/app.cfg:
+	  Added external auth module.
+
+2008-03-26 06:35  matsuo.takashi
+
+	* [r112] gheimdall/controllers.py: Enabled logging in the
+	  logout_fail handler.
+
+2008-03-26 05:30  matsuo.takashi
+
+	* [r111] locales/ja/LC_MESSAGES/messages.po, locales/messages.pot,
+	  locales/zh/LC_MESSAGES/messages.po: Renewed messages.
+
+2008-03-26 05:24  matsuo.takashi
+
+	* [r110] gheimdall/controllers.py,
+	  gheimdall/templates/gheimdall-logout-fail.kid: Added new template
+	  when logout treatment irreparably failed.
+
+2008-03-13 06:12  matsuo.takashi
+
+	* [r108] gheimdall/config/app.cfg: Changed default
+	  session_filter.storage_path to /var/gheimdall.
+
+2008-03-13 02:23  matsuo.takashi
+
+	* [r105] gheimdall/config/app.cfg, gheimdall/controllers.py: By
+	  default, GHeimdall will sleep 3 seconds when authentication
+	  fails. If you don't want this behavior, please configure
+	  apps.sleep_time = 0 in your app.cfg.
+
+2008-02-29 01:29  matsuo.takashi
+
+	* [r101] docs/gheimdall-manual-ja.txt, docs/gheimdall-manual.txt:
+	  Added dependencies.
+
+2008-02-29 01:01  matsuo.takashi
+
+	* [r98] gheimdall.egg-info/PKG-INFO:
+
+2008-02-29 01:00  matsuo.takashi
+
+	* [r97] docs/gheimdall-manual-ja.txt, docs/gheimdall-manual.txt:
+	  Just updated.
+
+2008-02-28 06:45  matsuo.takashi
+
+	* [r96] docs/gheimdall-manual-ja.txt, docs/gheimdall-manual.txt:
+	  Added descriptions about new parameters.
+
+2008-02-28 06:22  matsuo.takashi
+
+	* [r95] gheimdall/controllers.py: Added pseudo SLO service for
+	  Google Apps.
+
+2008-02-14 11:17  matsuo.takashi
+
+	* [r94] gheimdall/widgets.py: Made the username field longer.
+
+2008-02-14 06:03  matsuo.takashi
+
+	* [r93] gheimdall/controllers.py, gheimdall/widgets.py: Added
+	  always_remember_me attribute to app.cfg.
+
+2008-02-14 05:47  matsuo.takashi
+
+	* [r92] gheimdall/config/app.cfg: Added always_remember_me
+	  attribute.
+
+2008-02-12 03:01  matsuo.takashi
+
+	* [r91] gheimdall/responsecreator/__init__.py: Fixed a silly bug.
+
+2008-02-12 02:55  matsuo.takashi
+
+	* [r90] gheimdall/controllers.py,
+	  gheimdall/responsecreator/__init__.py, gheimdall/utils.py:
+	  Changed attribute name in the session.
+	  login_time -> auth_time
+	  To set auth_time to the AuthnInstant attribute in the
+	  AuthnStatement element.
+
+2008-02-08 00:31  matsuo.takashi
+
+	* [r89] gheimdall/controllers.py:
+
+2008-02-05 08:27  matsuo.takashi
+
+	* [r88] gheimdall/templates/gheimdall-logout-request.kid:
+
+2008-02-05 02:03  matsuo.takashi
+
+	* [r87] gheimdall/controllers.py:
+
+2008-01-23 03:46  matsuo.takashi
+
+	* [r85] gheimdall/controllers.py:
+
+2008-01-23 03:45  matsuo.takashi
+
+	* [r84] gheimdall/utils.py:
+
+2008-01-23 03:45  matsuo.takashi
+
+	* [r83] gheimdall/responsecreator/__init__.py:
+
+2007-12-18 04:39  matsuo.takashi
+
+	* [r81] gheimdall/config/app.cfg, gheimdall/controllers.py,
+	  gheimdall/responsecreator/__init__.py, gheimdall/sp.py,
+	  gheimdall/templates/gheimdall-login-success.kid,
+	  gheimdall/templates/gheimdall-logout-request.kid,
+	  gheimdall/templates/gheimdall-logout-response.kid,
+	  gheimdall/utils.py: Implemented Single Logout Sercice related
+	  stuff.
+
+2007-12-12 00:57  matsuo.takashi
+
+	* [r80] gheimdall/templates/gheimdall-login-success.kid,
+	  gheimdall/templates/master.kid: Adapted templates for old mobile
+	  phones.
+
+2007-12-06 07:47  matsuo.takashi
+
+	* [r79] gheimdall/controllers.py: Made codes pretty.
+
+2007-12-05 09:16  matsuo.takashi
+
+	* [r78] gheimdall/responsecreator/__init__.py: Made _adjust method
+	  valid.
+
+2007-12-05 09:15  matsuo.takashi
+
+	* [r77] gheimdall/controllers.py, gheimdall/widgets.py: To allow
+	  empty RelayState.
+
+2007-12-04 01:23  matsuo.takashi
+
+	* [r76] gheimdall.egg-info/SOURCES.txt, gheimdall/config/app.cfg,
+	  gheimdall/controllers.py, gheimdall/responsecreator/__init__.py,
+	  gheimdall/sp.py, gheimdall/utils.py: Changes for coping with
+	  plural service providers.
+
+2007-11-28 07:53  matsuo.takashi
+
+	* [r75] gheimdall/utils.py: Removed unnecessary methods.
+
+2007-11-27 08:28  matsuo.takashi
+
+	* [r74] gheimdall/utils.py: Made codes handsome.
+
+2007-11-27 08:21  matsuo.takashi
+
+	* [r73] gheimdall/utils.py: Removed bogus print statement...
+
+2007-11-27 08:15  matsuo.takashi
+
+	* [r72] gheimdall.egg-info/SOURCES.txt, gheimdall/config/app.cfg,
+	  gheimdall/responsecreator, gheimdall/responsecreator/__init__.py,
+	  gheimdall/responsecreator/default.py,
+	  gheimdall/templates/gheimdall-login-success.kid,
+	  gheimdall/utils.py: Now we use python-saml2 to create saml
+	  response.
+
+2007-11-27 04:09  matsuo.takashi
+
+	* [r71] locales/messages.pot:
+
+2007-11-27 02:56  matsuo.takashi
+
+	* [r70] locales/ja/LC_MESSAGES/messages.po, locales/zh,
+	  locales/zh/LC_MESSAGES, locales/zh/LC_MESSAGES/messages.po: Added
+	  Chinese catalogue.
+
+2007-11-02 02:16  matsuo.takashi
+
+	* [r69] gheimdall/config/log.cfg:
+
+2007-11-02 02:09  matsuo.takashi
+
+	* [r68] docs/gheimdall-manual-ja.txt, docs/gheimdall-manual.txt:
+	  Added descriptions about some configuration variables.
+
+2007-10-31 00:57  matsuo.takashi
+
+	* [r66] locales/ja/LC_MESSAGES/messages.po:
+
+2007-10-31 00:47  matsuo.takashi
+
+	* [r65] docs/gheimdall-manual-ja.txt, docs/gheimdall-manual.txt:
+
+2007-10-31 00:39  matsuo.takashi
+
+	* [r64] gheimdall/templates/gheimdall-reset-password-do.kid,
+	  gheimdall/templates/gheimdall-reset-password.kid: Forgotten to
+	  commit these files.
+
+2007-10-31 00:37  matsuo.takashi
+
+	* [r63] locales/ja/LC_MESSAGES/messages.po, locales/messages.pot:
+	  Collected and translated.
+
+2007-10-30 05:12  matsuo.takashi
+
+	* [r62] NEWS, README, gheimdall.egg-info/SOURCES.txt,
+	  gheimdall/config/app.cfg, gheimdall/controllers.py,
+	  gheimdall/passwd/__init__.py, gheimdall/passwd/ldappasswd.py,
+	  gheimdall/utils.py, gheimdall/widgets.py,
+	  samples/apache-modproxy.sample, samples/apache-modpython.sample:
+	  Added a functionality for resetting users' passwords.
+
+2007-10-20 06:07  matsuo.takashi
+
+	* [r61] gheimdall/config/app.cfg:
+
+2007-10-19 01:57  matsuo.takashi
+
+	* [r60] gheimdall/controllers.py,
+	  gheimdall/templates/404_exception.kid,
+	  locales/ja/LC_MESSAGES/messages.po, locales/messages.pot: Added
+	  stringly_expire decorator.
+	  Renewed i18n stuff.
+
+2007-10-18 05:39  matsuo.takashi
+
+	* [r59] gheimdall/config/app.cfg, gheimdall/controllers.py,
+	  gheimdall/templates/404_exception.kid,
+	  gheimdall/templates/unhandled_exception.kid,
+	  locales/ja/LC_MESSAGES/messages.po, locales/messages.pot: Enabled
+	  ErrorCatcher.
+
+2007-09-27 06:50  matsuo.takashi
+
+	* [r48] docs/gheimdall-manual.txt: Fixed typo.
+
+2007-09-27 01:55  matsuo.takashi
+
+	* [r47] docs/gheimdall-manual-ja.txt, docs/gheimdall-manual.txt:
+	  Fixed issue #8.
+
+2007-09-06 13:22  matsuo.takashi
+
+	* [r46] gheimdall/static/css/style.css,
+	  gheimdall/static/images/gheimdall.png: Changed logo size.
+
+2007-09-05 06:32  matsuo.takashi
+
+	* [r45] gheimdall/controllers.py: Improved the behavior of changing
+	  password functionality.
+
+2007-09-04 12:33  matsuo.takashi
+
+	* [r41] gheimdall/release.py, prod.cfg: Fixed version number.
+
+2007-09-04 12:29  matsuo.takashi
+
+	* [r40] gheimdall.egg-info/PKG-INFO: Fixed version.
+
+2007-09-04 12:27  matsuo.takashi
+
+	* [r39] gheimdall/controllers.py: Fixed the way to delete session
+	  data.
+
+2007-09-04 06:59  matsuo.takashi
+
+	* [r38] gheimdall/controllers.py: Added umask coll.
+
+2007-09-04 02:52  matsuo.takashi
+
+	* [r37] gheimdall/static/images/gheimdall.png: To use uppercased H.
+
+2007-09-04 02:35  matsuo.takashi
+
+	* [r36] gheimdall/controllers.py: To use cherrypy.session.get
+	  instead of cherrypy.session['key'].
+
+2007-09-04 01:53  matsuo.takashi
+
+	* [r35] gheimdall/static/css/style.css,
+	  gheimdall/static/images/gheimdall.png: Added Gheimdall logo.
+
+2007-08-08 07:39  matsuo.takashi
+
+	* [r29] gheimdall/controllers.py, gheimdall/utils.py,
+	  gheimdall/widgets.py, locales/ja/LC_MESSAGES/messages.po,
+	  locales/messages.pot: Added 'Remember me on this computer'
+	  checkbox.
+	  Issue #4.
+
+2007-08-08 05:00  matsuo.takashi
+
+	* [r28] docs/gheimdall-manual-ja.txt, docs/gheimdall-manual.txt,
+	  gheimdall/appsclient.py, gheimdall/passwd/__init__.py:
+	  Implemented issue #5.
+
+2007-08-07 06:02  matsuo.takashi
+
+	* [r27] gheimdall/config/app.cfg: Changed default session directory
+	  to /var/gheimdall instead of /tmp.
+
+2007-08-07 01:53  matsuo.takashi
+
+	* [r26] gheimdall/controllers.py: Fixed a small bug.
+
+2007-08-07 01:52  matsuo.takashi
+
+	* [r25] gheimdall/passwd/__init__.py: Added just a TODO mark.
+
+2007-08-07 01:44  matsuo.takashi
+
+	* [r24] gheimdall/config/app.cfg:
+
+2007-08-01 06:29  matsuo.takashi
+
+	* [r19] docs/gheimdall-manual-ja.txt, docs/gheimdall-manual.txt:
+	  Added description about apps.hash_function_name configuration
+	  variable.
+
+2007-08-01 06:06  matsuo.takashi
+
+	* [r18] gheimdall/passwd/__init__.py: Added a functionality for
+	  hash_function_name.
+
+2007-08-01 06:03  matsuo.takashi
+
+	* [r17] gheimdall/config/app.cfg:
+
+2007-08-01 04:05  matsuo.takashi
+
+	* [r16] gheimdall/passwd/__init__.py:
+
+2007-07-20 03:19  matsuo.takashi
+
+	* [r3] AUTHORS, COPYING, INSTALL, LICENSE, NEWS, README, TODO,
+	  gheimdall/config/app.cfg, locales/ja/LC_MESSAGES:
+

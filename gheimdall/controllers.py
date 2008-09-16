@@ -385,7 +385,7 @@ class Root(ErrorCatcher):
           else:
             scheme = 'http'
           url = scheme + '://mail.google.com/a/' + config.get('apps.domain') + '/'
-          url += "logout"
+          url += "?logout"
           return {
             "url": url,
             "tg_template": "gheimdall.templates.gheimdall-logout"}

@@ -458,6 +458,69 @@ class Root(ErrorCatcher):
     return dict(form=login_form_widget,
                 values=dict(SAMLRequest=SAMLRequest,RelayState=RelayState))
 
+  @expose(template="gheimdall.templates.gheimdall-static-login-error")
+  def static_login_error(*args, **kw):
+    return dict()
+    
+  @exception_handler(
+    static_login_error,
+    rules="isinstance(tg_exceptions,errors.GheimdallException)")
+  @expose(template="gheimdall.templates.gheimdall-login-success")
+  @strongly_expire
+  def static_login(self, user_name=None, password=None, **kw):
+    error_format = "Static login failed. Reason: %s"
+    if cherrypy.request.method != "POST":
+      errormsg = error_format % "Request method must be POST."
+      log.error(errormsg)
+      raise errors.GheimdallException(errormsg)
+    if user_name is None:
+      errormsg = error_format % "user_name required."
+      log.error(errormsg)
+      raise errors.GheimdallException(errormsg)
+    if password is None:
+      errormsg = error_format % "password required."
+      log.error(errormsg)
+      raise errors.GheimdallException(errormsg)
+    import urllib
+    url = "http://mail.google.com/a/%s" % config.get('apps.domain')
+    redirected_url = urllib.urlopen(url).geturl()
+    import re
+    matched = re.match('^.*SAMLRequest=(.*)&RelayState=(.*)$', redirected_url)
+    SAMLRequest = urllib.unquote(matched.group(1))
+    RelayState = urllib.unquote(matched.group(2))
+    log.debug("SAMLRequest: %s" % SAMLRequest)
+    log.debug("RelayState: %s" % RelayState)
+
+    # authentication
+    auth_engine = auth.createAuthEngine(engine=config.get('apps.auth_engine'),
+                                        config=config)
+    try:
+      auth_engine.authenticate(user_name, password)
+    except auth.AuthException, e:
+      if e.code == auth.NEW_AUTHTOK_REQD:
+        # When the user's password is expired, display password form if I can.
+        log.error(e)
+        flash(_('Password is expired. You need to set new password.'))
+        if not config.get('apps.use_change_passwd'):
+          flash(_('Password is expired. You need to set new password. ' +
+                  'But changing password is not available here'))
+          return dict(user_name=user_name,
+                      tg_template="gheimdall.templates.gheimdall-nopasswd")
+        # save user_name to session
+        cherrypy.session['user_name'] = user_name
+        return dict(tg_template="gheimdall.templates.gheimdall-passwd",
+                    form=passwd_form_widget,
+                    values=dict(backURL='',
+                                user_name=user_name,
+                                old_password=password,
+                                SAMLRequest=SAMLRequest,
+                                RelayState=RelayState))
+      # Failed.
+      flash(_('Can not login'))
+      time.sleep(config.get('apps.sleep_time', 3))
+      raise errors.GheimdallException(e.reason)
+    return utils.createLoginDict(SAMLRequest, RelayState, user_name)
+
   @expose(template="gheimdall.templates.gheimdall-login-success")
   @error_handler(login)
   @exception_handler(
@@ -466,7 +529,10 @@ class Root(ErrorCatcher):
   @validate(form=login_form_widget)
   @strongly_expire
   def login_do(self, SAMLRequest, RelayState, user_name, password, **kw):
-    cherrypy.session['remember_me'] = kw.get('remember_me', False)
+    if config.get('always_remember_me', False):
+      cherrypy.session['remember_me'] = True
+    else:
+      cherrypy.session['remember_me'] = kw.get('remember_me', False)
     if config.get('apps.use_header_auth', False):
       raise errors.GheimdallException(
         'You can not use this method when ' +

@@ -1,0 +1,213 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR ORGANIZATION
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2008-08-26 14:25\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Luca Tebaldi <luca@unife.it>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: utf-8\n"
+"Generated-By: pygettext.py 1.5\n"
+
+
+#: gheimdall/controllers.py:481
+msgid "Password is expired. You need to set new password."
+msgstr "La Password e' scaduta, devi settarne una nuova"
+
+#: gheimdall/controllers.py:497
+msgid "Can not login"
+msgstr "Login fallito"
+
+#: gheimdall/controllers.py:547 gheimdall/controllers.py:565
+#: gheimdall/templates/gheimdall-nopasswd.kid:title
+msgid "Changing password is not available here"
+msgstr "Combio password non abilitato"
+
+#: gheimdall/controllers.py:577
+msgid "Failed to change password"
+msgstr "Cambio password fallito"
+
+#: gheimdall/templates/404_exception.kid:h1
+#: gheimdall/templates/404_exception.kid:title
+msgid "404 - No such page here"
+msgstr "pagina insesitente"
+
+#: gheimdall/templates/_error.kid:pre
+msgid "Traceback here."
+msgstr "torna indietro"
+
+#: gheimdall/templates/_error.kid:span
+msgid "Error occurred."
+msgstr "errore"
+
+#: gheimdall/templates/_error.kid:title
+#: gheimdall/templates/unhandled_exception.kid:title
+msgid "Title"
+msgstr "metti il titolo"
+
+#: gheimdall/templates/gheimdall-login-success.kid:font
+#: gheimdall/templates/gheimdall-logout-request.kid:font
+#: gheimdall/templates/gheimdall-logout-response.kid:font
+#: gheimdall/templates/gheimdall-logout.kid:font
+msgid "Please wait a second..."
+msgstr "Un attimo...."
+
+#: gheimdall/templates/gheimdall-login-success.kid:title
+msgid "Logging in..."
+msgstr "Sto accedendo...."
+
+#: gheimdall/templates/gheimdall-login.kid:h1
+#: gheimdall/templates/gheimdall-login.kid:title
+#: gheimdall/templates/login.kid:h1 gheimdall/templates/login.kid:title
+#: gheimdall/widgets.py:135 gheimdall/widgets.py:143
+msgid "Login"
+msgstr "Accedi"
+
+#: gheimdall/templates/gheimdall-logout-fail.kid:font
+#: gheimdall/templates/gheimdall-logout-fail.kid:title
+msgid "Could not handle logout request"
+msgstr "Non &egrave; possibiltire la richiesta di logout "
+
+#: gheimdall/templates/gheimdall-logout-request.kid:title
+#: gheimdall/templates/gheimdall-logout-response.kid:title
+#: gheimdall/templates/gheimdall-logout.kid:title
+msgid "Logging out..."
+msgstr "Logging out...."
+
+#: gheimdall/templates/gheimdall-logout.kid:a
+msgid "Login again"
+msgstr "Loggati di nuovo"
+
+#: gheimdall/templates/gheimdall-logout.kid:font
+msgid "Logged out"
+msgstr "Sei uscito"
+
+#: gheimdall/templates/gheimdall-nopasswd.kid:h1
+msgid "Not available"
+msgstr "Non disponibile"
+
+#: gheimdall/templates/gheimdall-passwd-success.kid:a
+#: gheimdall/templates/gheimdall-passwd.kid:a
+msgid "Back"
+msgstr "Indietro"
+
+#: gheimdall/templates/gheimdall-passwd-success.kid:h1
+#: gheimdall/templates/gheimdall-passwd-success.kid:title
+msgid "Your password has changed."
+msgstr "Password cambiata"
+
+#: gheimdall/templates/gheimdall-passwd.kid:h1
+#: gheimdall/templates/gheimdall-passwd.kid:title gheimdall/widgets.py:68
+msgid "Change password"
+msgstr "Cambia password"
+
+#: gheimdall/templates/gheimdall-reset-password-do.kid:h1
+#: gheimdall/templates/gheimdall-reset-password-do.kid:title
+#: gheimdall/templates/gheimdall-reset-password.kid:h1
+#: gheimdall/templates/gheimdall-reset-password.kid:title
+msgid "Reset User's password"
+msgstr "Azzera la password"
+
+#: gheimdall/templates/gheimdall-reset-password-do.kid:p
+msgid "Password was reset."
+msgstr "Password azzerata"
+
+#: gheimdall/templates/login.kid:label gheimdall/widgets.py:112
+#: gheimdall/widgets.py:149
+msgid "User Name:"
+msgstr "Nome Utente"
+
+#: gheimdall/templates/login.kid:label gheimdall/widgets.py:122
+msgid "Password:"
+msgstr "Password"
+
+#: gheimdall/templates/master.kid:title
+msgid "Your title goes here"
+msgstr "metti il titolo"
+
+#: gheimdall/templates/unhandled_exception.kid:h1
+msgid "Oops! An error occured"
+msgstr "Ooops! errore"
+
+#: gheimdall/templates/unhandled_exception.kid:p
+msgid "-The Team"
+msgstr "- Il Team"
+
+#: gheimdall/templates/unhandled_exception.kid:p
+msgid ""
+"A programmer has been notified and\n"
+"    will try to fix the problem as soon as possible."
+msgstr "Il programma &egrave; stato modificato, cercheremo di risolvere il problema il prima possibile"
+
+#: gheimdall/templates/unhandled_exception.kid:p
+msgid "Our sincerest apologies,"
+msgstr "Saimo spiacenti"
+
+#: gheimdall/templates/unhandled_exception.kid:p
+msgid "Something went wonky and we weren't expecting it. Sorry about that."
+msgstr "Qualcosa &egrave; andato male, non ce lo aspettavamo, siamo spiacenti per il disagio"
+
+#: gheimdall/templates/unhandled_exception.kid:p
+msgid ""
+"The problem was actually so bad that\n"
+"    we couldn't even send an E-mail to our team to sort the problem out!\n"
+"    If you keep getting this message, please send us an E-mail with some\n"
+"    information about what you were doing when this happened, so we can\n"
+"    try and smooth things over :-)"
+msgstr "Grave problema, per favore inviaci un mail con le informazioni che ci possono essere utili per risolvere il problema"
+
+#: gheimdall/templates/unhandled_exception.kid:p
+msgid ""
+"This is commonly known as an \"Error 500  \" or\n"
+"    \"Internal Server Error\". It means we messed up."
+msgstr "Error 500 - internal server error"
+
+#: gheimdall/utils.py:115 gheimdall/utils.py:119
+msgid "The value of SAMLRequest is wrong"
+msgstr "il valore del SAMLRequest &egrave corrotto"
+
+#: gheimdall/widgets.py:35
+msgid "New password does not match"
+msgstr "La nuova password non corrisponde"
+
+#: gheimdall/widgets.py:50
+msgid "Old password:"
+msgstr "Vecchia password"
+
+#: gheimdall/widgets.py:53
+msgid "New password:"
+msgstr "Nuova Password"
+
+#: gheimdall/widgets.py:58
+msgid "Input does not match our password policy"
+msgstr "Il valore inserito non va bene rispetto alle politiche delle password"
+
+#: gheimdall/widgets.py:61
+msgid "Confirm:"
+msgstr "Conferma:"
+
+#: gheimdall/widgets.py:117 gheimdall/widgets.py:126 gheimdall/widgets.py:153
+msgid "Please enter a value"
+msgstr "Inserisci un valore"
+
+#: gheimdall/widgets.py:118 gheimdall/widgets.py:127 gheimdall/widgets.py:154
+msgid "The input must be a string (not a %(type)s: %(value)r)"
+msgstr "Devi inserire una stringa (non un %(type)s: %(value)r)"
+
+#: gheimdall/widgets.py:119 gheimdall/widgets.py:128 gheimdall/widgets.py:155
+msgid "The input must be a string (not None)"
+msgstr "Devi inserire una stringa (non vuota)"
+
+#: gheimdall/widgets.py:138
+msgid "Remember me on this computer:"
+msgstr "Ricordami su questo computer"
+
+#: gheimdall/widgets.py:161
+msgid "Reset"
+msgstr "Azzera"
+

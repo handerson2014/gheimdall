@@ -108,7 +108,10 @@ def createLoginDict(SAMLRequest, RelayState, user_name, set_time=True):
     try:
       xml = zlib.decompress(base64.b64decode(SAMLRequest), -8)
     except:
-      xml = zlib.decompress(base64.b64decode(SAMLRequest))
+      try:
+        xml = zlib.decompress(base64.b64decode(SAMLRequest))
+      except:
+        xml = base64.b64decode(SAMLRequest)
     authn_request = samlp.AuthnRequestFromString(xml)
   except Exception, e:
     log.error(e)

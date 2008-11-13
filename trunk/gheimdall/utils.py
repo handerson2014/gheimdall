@@ -126,7 +126,7 @@ def createLoginDict(SAMLRequest, RelayState, user_name, set_time=True):
   issuer = authn_request.issuer.text.strip()
   
   # create response
-  creators = config.get('apps.response_creators')
+  creators = config.get('apps.response_creators', dict())
   module_name = creators.get(
     issuer, config.get("apps.default_response_creator","default"))
   response_creator = responsecreator.create(module_name, config)

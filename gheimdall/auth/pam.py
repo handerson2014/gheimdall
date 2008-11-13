@@ -64,7 +64,7 @@ class PamAuthEngine(auth.BaseAuthEngine):
       raise auth.AuthException(args[0], args[1])
     except Exception, e:
       pam.close_session()
-      raise auth.AuthException(auth.ERR_UNKNOWN, e.__str__())
+      raise auth.AuthException(e.__str__(), auth.ERR_UNKNOWN)
     else:
       pam.close_session()
       return True

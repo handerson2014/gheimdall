@@ -1,3 +1,4 @@
+#labels Featured
 =Installing gheimdall2 manually on Debian/lenny.=
 
 ==1) Install subversion, and mercurial.==

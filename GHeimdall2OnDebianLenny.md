@@ -1,0 +1,100 @@
+# Installing gheimdall2 manually on Debian/lenny. #
+
+## 1) Install subversion, and mercurial. ##
+```
+# aptitude install subversion mercurial
+```
+
+## 2) Retrieve and install python-saml2. ##
+```
+# svn checkout http://python-saml2.googlecode.com/svn/trunk/ python-saml2-trunk
+# cd python-saml2-trunk/
+# python setup.py build
+# python setup.py install
+```
+
+## 3) Install needed stuff with aptitude ##
+```
+# aptitude install build-essential python-dev libxml2-dev libxmlsec1-dev libxmlsec1-openssl xmlsec1 openssl python-libxml2
+# aptitude install python-gdata python-django gettext
+```
+
+## 4) Install pyxmlsec ##
+```
+# wget http://labs.libre-entreprise.org/download.php/430/pyxmlsec-0.3.0.tar.gz
+# tar zxvf pyxmlsec-0.3.0.tar.gz
+# cd pyxmlsec-0.3.0
+# python setup.py build
+# python setup.py install
+```
+
+## 5) Install uamobile ##
+```
+# wget http://pypi.python.org/packages/source/u/uamobile/uamobile-0.1.2.tar.gz#md5=664ac605b7fe548f205360a81735caf3
+# tar zxvf uamobile-0.1.2.tar.gz
+# aptitude install python-setuptools
+# cd uamobile-0.1.2
+# python setup.py build
+# python setup.py install
+```
+
+## 6) prepare needed directories ##
+```
+# mkdir /var/gheimdall2
+# chown www-data.www-data /var/gheimdall2
+# mkdir /var/gheimdall2/session
+# chown www-data.www-data /var/gheimdall2/session
+# mkdir /var/log/gheimdall2
+# chown www-data.www-data /var/log/gheimdall2
+# mkdir /etc/gheimdall2
+# mkdir /etc/gheimdall2/conf.d
+```
+
+## 7) Install gheimdall2 ##
+```
+# hg clone https://bitbucket.org/tmatsuo/gheimdall2/ gheimdall2-trunk
+# cd gheimdall2-trunk/gheimdall2
+# python manage.py compilemessages
+# cd ..
+# python setup.py build
+# python setup.py install
+```
+
+## 8) setting for gheimdall2 ##
+```
+# vi /usr/lib/python2.5/site-packages/gheimdall2/settings.py
+EDIT your secret key
+# cd /etc/gheimdall2
+# cp /usr/lib/python2.5/site-packages/gheimdall2/conf/gheimdall2.conf .
+# vi gheimdall2.conf
+EDIT
+```
+
+## 9) creating key pair ##
+```
+# openssl genrsa -des3 -out privkey.pem 2048
+# openssl rsa -in privkey.pem -out privkey-nopass.pem
+# openssl rsa -in privkey-nopass.pem -pubout -outform DER -out publickey.der
+# chown www-data.www-data privkey.pem privkey-nopass.pem
+# chmod 0600 privkey.pem privkey-nopass.pem
+```
+Please upload created publickey.der to google apps control panel.
+
+## 10) apache setting, restart apache ##
+```
+# cp ~/src/gheimdall2-trunk/docs/gheimdall2-modpython.sample /etc/apache2/conf.d/gheimdall2.conf
+# vi /etc/apache2/conf.d/gheimdall2.conf
+# /etc/init.d/apache2 restart
+```
+Please change every 'python2.4' to 'python2.5'.
+
+## 11) install PyPAM if necessary ##
+```
+# cd ~/src
+# wget http://www.pangalactic.org/PyPAM/PyPAM-0.5.0.tar.gz
+# tar zxvf PyPAM-0.5.0.tar.gz
+# cd PyPAM-0.5.0
+# aptitude install libpam-dev
+# python setup.py build
+# python setup.py install
+```
